@@ -24,13 +24,14 @@
             <SelectIconModal
                 v-if="isSelecting"
                 @close="isSelecting = false"
+                @select="onSelect"
             />
         </template>
     </DefaultField>
 </template>
 
 <script>
-import { FormField, HandlesValidationErrors } from 'laravel-nova'
+import {FormField, HandlesValidationErrors} from 'laravel-nova'
 import SelectIconModal from "./SelectIconModal.vue";
 
 export default {
@@ -54,18 +55,21 @@ export default {
     }),
 
     methods: {
-        /*
-         * Set the initial, internal value for the field.
-         */
         setInitialValue() {
             this.value = this.field.value || ''
         },
 
-        /**
-         * Fill the given FormData object with the field's internal value.
-         */
         fill(formData) {
             formData.append(this.fieldAttribute, this.value || '')
+        },
+
+        setIcon(icon) {
+            this.value = icon
+        },
+
+        onSelect(icon) {
+            this.setIcon(icon)
+            this.isSelecting = false
         },
     },
 }
