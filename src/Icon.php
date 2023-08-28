@@ -1,6 +1,6 @@
 <?php
 
-namespace Nevadskiy\IconNovaField;
+namespace Nevadskiy\Nova\Icon;
 
 use Laravel\Nova\Fields\Field;
 

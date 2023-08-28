@@ -1,6 +1,6 @@
 <?php
 
-namespace Nevadskiy\IconNovaField;
+namespace Nevadskiy\Nova\Icon;
 
 use Illuminate\Support\ServiceProvider;
 use Laravel\Nova\Events\ServingNova;
