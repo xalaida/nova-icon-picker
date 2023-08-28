@@ -49,7 +49,9 @@ const emits = defineEmits(['close', 'select'])
 const rawSvgIcon = ref()
 
 const submit = () => {
-    console.log('submitting...')
-    emits('select', rawSvgIcon)
+    emits('select', {
+        type: 'custom',
+        icon: rawSvgIcon
+    })
 }
 </script>

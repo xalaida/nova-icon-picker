@@ -11,7 +11,7 @@
                     v-if="value"
                     style="width: 150px; height: 150px"
                     class="mb-4 bg-gray-50 dark:bg-gray-700 relative aspect-square flex items-center justify-center border-2 border-gray-200 dark:border-gray-700 overflow-hidden rounded-lg"
-                    v-html="value"
+                    v-html="value.icon"
                 />
 
                 <!-- @todo add custom details -->
@@ -68,19 +68,30 @@ export default {
 
     methods: {
         setInitialValue() {
-            this.value = this.field.value || ''
+            if (this.field.value) {
+                this.value = JSON.parse(this.field.value)
+            } else {
+                this.value = ''
+            }
         },
 
         fill(formData) {
-            formData.append(this.fieldAttribute, this.value || '')
+            if (this.value) {
+                formData.append(this.fieldAttribute, JSON.stringify(this.value))
+            } else {
+                formData.append(this.fieldAttribute, '')
+            }
         },
 
         setIcon(icon) {
             this.value = icon
+
+            this.emitFieldValueChange(this.fieldAttribute, this.value)
         },
 
         onSelect(icon) {
             this.setIcon(icon)
+
             this.isSelecting = false
         },
     },
