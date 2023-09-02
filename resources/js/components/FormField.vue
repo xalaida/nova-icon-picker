@@ -8,10 +8,10 @@
         <template #field>
             <div>
                 <div
-                    v-if="value"
+                    v-if="contents"
                     style="width: 150px; height: 150px"
-                    class="mb-4 bg-gray-50 dark:bg-gray-700 relative aspect-square flex items-center justify-center border-2 border-gray-200 dark:border-gray-700 overflow-hidden rounded-lg"
-                    v-html="value.icon"
+                    class="mb-4 bg-gray-50 dark:bg-gray-700 relative aspect-square p-4 flex items-center justify-center border-2 border-gray-200 dark:border-gray-700 overflow-hidden rounded-lg"
+                    v-html="contents"
                 />
 
                 <!-- @todo add custom details -->
@@ -35,6 +35,7 @@
                 <SelectIconModal
                     v-if="isSelecting"
                     :sets="field.sets"
+                    :current-icon="value"
                     @close="isSelecting = false"
                     @select="onSelect"
                 />
@@ -64,6 +65,7 @@ export default {
     ],
 
     data: () => ({
+        contents: '', // @todo init value
         isSelecting: true
     }),
 
@@ -73,21 +75,18 @@ export default {
         },
 
         fill(formData) {
-            // if (this.value) {
-            //     formData.append(this.fieldAttribute, JSON.stringify(this.value))
-            // } else {
-            //     formData.append(this.fieldAttribute, '')
-            // }
+            formData.append(this.fieldAttribute, this.value)
         },
 
-        setIcon(icon) {
-            this.value = icon
+        setIcon(name, contents) {
+            this.value = name
+            this.contents = contents
 
             this.emitFieldValueChange(this.fieldAttribute, this.value)
         },
 
-        onSelect(icon) {
-            this.setIcon(icon)
+        onSelect(name, contents) {
+            this.setIcon(name, contents)
 
             this.isSelecting = false
         },

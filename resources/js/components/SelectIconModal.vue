@@ -5,7 +5,7 @@
         role="alertdialog"
         @close-via-escape="$emit('close')"
     >
-        <form @submit.prevent="submit" class="bg-white dark:bg-gray-800">
+        <div class="bg-white dark:bg-gray-800">
             <ModalHeader class="flex items-center">
                 Select icon
             </ModalHeader>
@@ -33,7 +33,7 @@
                             <button
                                 type="button"
                                 class="block p-4 w-full border-2 rounded"
-                                :class="selectedIcon && selectedIcon.name === icon.name ? 'border-primary-500 bg-primary-50' : 'border-transparent'"
+                                :class="currentIcon === icon.name ? 'border-primary-500 bg-primary-50' : 'border-transparent'"
                                 @click="selectIcon(icon)"
                             >
                             <span class="flex items-center justify-center">
@@ -51,14 +51,14 @@
                 </div>
 
                 <!-- @todo add button to select icon from local computer -->
-                <textarea
-                    v-if="false"
-                    type="text"
-                    class="block w-full form-control form-input form-input-bordered py-3 h-auto"
-                    rows="5"
-                    :placeholder="__('Paste SVG...')"
-                    v-model="rawSvgIcon"
-                />
+                <!-- <textarea-->
+                <!--     v-if="false"-->
+                <!--     type="text"-->
+                <!--     class="block w-full form-control form-input form-input-bordered py-3 h-auto"-->
+                <!--     rows="5"-->
+                <!--     :placeholder="__('Paste SVG...')"-->
+                <!--     v-model="rawSvgIcon"-->
+                <!-- />-->
             </ModalContent>
 
             <ModalFooter>
@@ -69,34 +69,24 @@
                     >
                         {{ __('Cancel') }}
                     </BasicButton>
-
-                    <DefaultButton
-                        type="submit"
-                    >
-                        {{ __('Confirm') }}
-                    </DefaultButton>
                 </div>
             </ModalFooter>
-        </form>
+        </div>
     </Modal>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
 
-const props = defineProps(['sets'])
+const props = defineProps(['currentIcon', 'sets'])
 
 const emits = defineEmits(['close', 'select'])
+
+const isFetching = ref(false)
 
 const currentSet = ref(0)
 
 const icons = ref([])
-
-const isFetching = ref(false)
-
-const selectedIcon = ref()
-
-const rawSvgIcon = ref()
 
 const fetchIcons = async () => {
     isFetching.value = true
@@ -108,15 +98,8 @@ const fetchIcons = async () => {
     return response.data
 }
 
-const submit = () => {
-    emits('select', {
-        set: props.sets[0],
-        icon: rawSvgIcon
-    })
-}
-
 const selectIcon = (icon) => {
-    selectedIcon.value = icon
+    emits('select', icon.name, icon.contents)
 }
 
 onMounted(async () => {
