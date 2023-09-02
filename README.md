@@ -11,3 +11,5 @@
 - [ ] cache API json responses
 - [ ] raw svg icons
 - [ ] Iconify API
+- [ ] handle case when no icon sets registered
+- [ ] use scroll pagination for large icon sets
