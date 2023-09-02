@@ -17,8 +17,8 @@ class SvgIconset
     {
         return collect(Finder::create()->in($this->path)->files())
             ->map(fn (SplFileInfo $file) => new SvgIcon(
-                $this->prefix . $file->getFilenameWithoutExtension(),
-                $file->getPathname()
+                name: $this->prefix . $file->getFilenameWithoutExtension(),
+                path: $file->getPathname()
             ))
             ->values()
             ->all();
