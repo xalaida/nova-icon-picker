@@ -12,5 +12,6 @@
 - [ ] raw svg icons
 - [ ] Iconify API
 - [ ] display icon name similar to file image field 
-- [ ] handle case when no icon sets registered
 - [ ] add button to unset icon
+- [ ] handle case when no icon sets registered
+- [ ] handle case when icon not found
