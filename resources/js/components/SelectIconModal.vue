@@ -10,16 +10,29 @@
                 Select icon
             </ModalHeader>
 
-            <ModalContent>
-                <nav>
-                    <ul class="flex">
-                        <li v-for="set in sets" :key="set.name">
-                            <button>{{ set.display }}</button>
-                        </li>
-                    </ul>
-                </nav>
+            <div>
+                <div class="border-t border-b px-8 py-3 flex items-center justify-between">
+                    <div class="-mx-2 w-1/2 px-2">
+                        <SelectControl
+                            :options="setOptions"
+                            :selected="currentSet"
+                            @change="(set) => currentSet = set"
+                        />
+                    </div>
 
-                <div class="py-6">
+                    <div class="-mx-2 w-1/2 px-2">
+                        <input
+                            type="search"
+                            placeholder="Search icons..."
+                            class="w-full form-control form-input form-input-bordered"
+                        />
+                    </div>
+                </div>
+
+                <div
+                    class="py-6 px-8 overflow-x-hidden overflow-y-auto"
+                    style="max-height: 600px"
+                >
                     <Loader
                         v-if="isFetching"
                         width="32"
@@ -28,7 +41,7 @@
                     <ul
                         v-else-if="icons.length > 0"
                         class="grid gap-6"
-                        style="grid-template-columns: repeat(8, minmax(0, 1fr)); max-height: 600px; overflow-y: auto; overflow-x: hidden"
+                        style="grid-template-columns: repeat(8, minmax(0, 1fr));"
                     >
                         <li v-for="icon in icons" :key="icon.name" class="w-full">
                             <button
@@ -37,11 +50,9 @@
                                 :class="currentIcon === icon.name ? 'border-primary-500 bg-primary-50' : 'border-transparent'"
                                 @click="selectIcon(icon)"
                             >
-                            <span class="flex items-center justify-center">
-                                <span v-html="icon.contents" class="inline-block w-10 h-10" />
-                            </span>
-
-                                <span class="mt-3 block text-center">{{ icon.name }}</span>
+                                <span class="flex items-center justify-center">
+                                    <span v-html="icon.contents" class="inline-block w-10 h-10" />
+                                </span>
                             </button>
                         </li>
                     </ul>
@@ -60,7 +71,7 @@
                 <!--     :placeholder="__('Paste SVG...')"-->
                 <!--     v-model="rawSvgIcon"-->
                 <!-- />-->
-            </ModalContent>
+            </div>
 
             <ModalFooter>
                 <div class="ml-auto space-x-3">
@@ -77,22 +88,28 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 
 const props = defineProps(['currentIcon', 'sets'])
 
 const emits = defineEmits(['close', 'select'])
 
-const isFetching = ref(false)
+const currentSet = ref(props.sets[0].name)
 
-const currentSet = ref(0)
+const setOptions = computed(() => props.sets.map((set) => ({
+    label: set.display,
+    value: set.name,
+})))
+
+const isFetching = ref(false)
 
 const icons = ref([])
 
 const fetchIcons = async () => {
     isFetching.value = true
 
-    const response = await Nova.request().get(`/nova-vendor/iconsets/${props.sets[currentSet.value].name}/icons`)
+    // @todo handle exception
+    const response = await Nova.request().get(`/nova-vendor/iconsets/${currentSet.value}/icons`)
 
     isFetching.value = false
 
