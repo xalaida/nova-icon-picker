@@ -34,6 +34,7 @@
 
                 <SelectIconModal
                     v-if="isSelecting"
+                    :sets="field.sets"
                     @close="isSelecting = false"
                     @select="onSelect"
                 />
@@ -43,7 +44,7 @@
 </template>
 
 <script>
-import {FormField, HandlesValidationErrors} from 'laravel-nova'
+import { FormField, HandlesValidationErrors } from 'laravel-nova'
 import SelectIconModal from "./SelectIconModal.vue";
 
 export default {
@@ -68,19 +69,15 @@ export default {
 
     methods: {
         setInitialValue() {
-            if (this.field.value) {
-                this.value = JSON.parse(this.field.value)
-            } else {
-                this.value = ''
-            }
+            this.value = this.field.value
         },
 
         fill(formData) {
-            if (this.value) {
-                formData.append(this.fieldAttribute, JSON.stringify(this.value))
-            } else {
-                formData.append(this.fieldAttribute, '')
-            }
+            // if (this.value) {
+            //     formData.append(this.fieldAttribute, JSON.stringify(this.value))
+            // } else {
+            //     formData.append(this.fieldAttribute, '')
+            // }
         },
 
         setIcon(icon) {
