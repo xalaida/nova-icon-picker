@@ -49,9 +49,9 @@
                                     :class="currentIcon === icon.name ? 'border-primary-500 bg-primary-50' : 'border-transparent'"
                                     @click="selectIcon(icon)"
                                 >
-                                <span class="flex items-center justify-center">
-                                    <span v-html="icon.contents" class="inline-block w-10 h-10" />
-                                </span>
+                                    <span class="flex items-center justify-center">
+                                        <span v-html="icon.contents" class="inline-block w-10 h-10" />
+                                    </span>
                                 </button>
                             </li>
                         </ul>
