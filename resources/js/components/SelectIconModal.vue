@@ -1,7 +1,7 @@
 <template>
     <Modal
         show
-        size="2xl"
+        size="5xl"
         role="alertdialog"
         @close-via-escape="$emit('close')"
     >
@@ -10,7 +10,7 @@
                 Select icon
             </ModalHeader>
 
-            <ModalContent class="px-8">
+            <ModalContent>
                 <nav>
                     <ul class="flex">
                         <li v-for="set in sets" :key="set.name">
@@ -27,7 +27,8 @@
 
                     <ul
                         v-else-if="icons.length > 0"
-                        class="grid grid-cols-4 gap-6"
+                        class="grid gap-6"
+                        style="grid-template-columns: repeat(8, minmax(0, 1fr)); max-height: 600px; overflow-y: auto; overflow-x: hidden"
                     >
                         <li v-for="icon in icons" :key="icon.name" class="w-full">
                             <button
