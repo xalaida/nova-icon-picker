@@ -22,6 +22,7 @@
 
                     <div class="-mx-2 w-1/2 px-2">
                         <input
+                            v-model="search"
                             type="search"
                             placeholder="Search icons..."
                             class="w-full form-control form-input form-input-bordered"
@@ -33,33 +34,32 @@
                     class="py-6 px-8 overflow-x-hidden overflow-y-auto"
                     style="max-height: 600px"
                 >
-                    <Loader
-                        v-if="isFetching"
-                        width="32"
-                    />
-
-                    <ul
-                        v-else-if="icons.length > 0"
-                        class="grid gap-6"
-                        style="grid-template-columns: repeat(8, minmax(0, 1fr));"
+                    <LoadingView
+                        :loading="isFetching"
                     >
-                        <li v-for="icon in icons" :key="icon.name" class="w-full">
-                            <button
-                                type="button"
-                                class="block p-4 w-full border-2 rounded"
-                                :class="currentIcon === icon.name ? 'border-primary-500 bg-primary-50' : 'border-transparent'"
-                                @click="selectIcon(icon)"
-                            >
+                        <ul
+                            v-if="icons.length > 0"
+                            class="grid gap-6"
+                            style="grid-template-columns: repeat(8, minmax(0, 1fr));"
+                        >
+                            <li v-for="icon in filteredIcons" :key="icon.name" class="w-full">
+                                <button
+                                    type="button"
+                                    class="block p-4 w-full border-2 rounded"
+                                    :class="currentIcon === icon.name ? 'border-primary-500 bg-primary-50' : 'border-transparent'"
+                                    @click="selectIcon(icon)"
+                                >
                                 <span class="flex items-center justify-center">
                                     <span v-html="icon.contents" class="inline-block w-10 h-10" />
                                 </span>
-                            </button>
-                        </li>
-                    </ul>
+                                </button>
+                            </li>
+                        </ul>
 
-                    <div v-else>
-                        No icons found.
-                    </div>
+                        <div v-else>
+                            No icons found.
+                        </div>
+                    </LoadingView>
                 </div>
 
                 <!-- @todo add button to select icon from local computer -->
@@ -104,6 +104,10 @@ const setOptions = computed(() => props.sets.map((set) => ({
 const isFetching = ref(false)
 
 const icons = ref([])
+
+const search = ref('')
+
+const filteredIcons = computed(() => icons.value.filter((icon) => icon.name.includes(search.value)))
 
 const fetchIcons = async () => {
     isFetching.value = true
