@@ -10,7 +10,7 @@ class IconRegistry
 
     protected array $iconsets = [];
 
-    public function setSeparator(string $separator): void
+    public function useSeparator(string $separator): void
     {
         $this->separator = $separator;
     }

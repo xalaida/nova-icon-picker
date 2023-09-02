@@ -7,6 +7,8 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class SvgIconset
 {
+    public const EXTENSION = '.svg';
+
     public function __construct(
         public string $path,
         public string $prefix = '',
@@ -17,7 +19,7 @@ class SvgIconset
     {
         return new SvgIcon(
             name: $this->prefix . $name,
-            path: $this->path . DIRECTORY_SEPARATOR . $name . '.svg',
+            path: $this->path . DIRECTORY_SEPARATOR . $name . static::EXTENSION,
         );
     }
 
