@@ -12,7 +12,7 @@ class SvgIcon implements JsonSerializable
     ) {
     }
 
-    public function getContents(): string
+    public function contents(): string
     {
         return file_get_contents($this->path);
     }
@@ -21,7 +21,7 @@ class SvgIcon implements JsonSerializable
     {
         return [
             'name' => $this->name,
-            'contents' => $this->getContents(),
+            'contents' => $this->contents(),
         ];
     }
 }

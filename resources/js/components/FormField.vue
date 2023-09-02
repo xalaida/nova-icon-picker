@@ -34,7 +34,7 @@
 
                 <SelectIconModal
                     v-if="isSelecting"
-                    :sets="field.sets"
+                    :iconsets="field.iconsets"
                     :current-icon="value"
                     @close="isSelecting = false"
                     @select="onSelect"
@@ -64,10 +64,12 @@ export default {
         'field',
     ],
 
-    data: () => ({
-        contents: '', // @todo init value
-        isSelecting: true
-    }),
+    data() {
+        return {
+            contents: this.field.contents,
+            isSelecting: true
+        }
+    },
 
     methods: {
         setInitialValue() {
@@ -89,7 +91,7 @@ export default {
             this.setIcon(name, contents)
 
             this.isSelecting = false
-        },
+        }
     },
 }
 </script>

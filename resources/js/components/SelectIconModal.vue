@@ -14,9 +14,9 @@
                 <div class="border-t border-b px-8 py-3 flex items-center justify-between">
                     <div class="-mx-2 w-1/2 px-2">
                         <SelectControl
-                            :options="setOptions"
-                            :selected="currentSet"
-                            @change="(set) => currentSet = set"
+                            :options="iconsetOptions"
+                            :selected="currentIconset"
+                            @change="(iconset) => currentIconset = iconset"
                         />
                     </div>
 
@@ -35,7 +35,7 @@
                     style="max-height: 600px"
                 >
                     <LoadingView
-                        :loading="isFetching"
+                        :loading="fetching"
                     >
                         <ul
                             v-if="icons.length > 0"
@@ -90,18 +90,18 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 
-const props = defineProps(['currentIcon', 'sets'])
+const props = defineProps(['currentIcon', 'iconsets'])
 
 const emits = defineEmits(['close', 'select'])
 
-const currentSet = ref(props.sets[0].name)
+const currentIconset = ref(props.iconsets[0].name)
 
-const setOptions = computed(() => props.sets.map((set) => ({
-    label: set.display,
-    value: set.name,
+const iconsetOptions = computed(() => props.iconsets.map((iconset) => ({
+    label: iconset.display,
+    value: iconset.name,
 })))
 
-const isFetching = ref(false)
+const fetching = ref(false)
 
 const icons = ref([])
 
@@ -110,12 +110,12 @@ const search = ref('')
 const filteredIcons = computed(() => icons.value.filter((icon) => icon.name.includes(search.value)))
 
 const fetchIcons = async () => {
-    isFetching.value = true
+    fetching.value = true
 
     // @todo handle exception
-    const response = await Nova.request().get(`/nova-vendor/iconsets/${currentSet.value}/icons`)
+    const response = await Nova.request().get(`/nova-vendor/iconsets/${currentIconset.value}/icons`)
 
-    isFetching.value = false
+    fetching.value = false
 
     return response.data
 }

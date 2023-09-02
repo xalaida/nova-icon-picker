@@ -13,12 +13,20 @@ class SvgIconset
     ) {
     }
 
+    public function icon(string $name): SvgIcon
+    {
+        return new SvgIcon(
+            name: $this->prefix . $name,
+            path: $this->path . DIRECTORY_SEPARATOR . $name . '.svg',
+        );
+    }
+
     public function icons(): array
     {
         return collect(Finder::create()->in($this->path)->files())
             ->map(fn (SplFileInfo $file) => new SvgIcon(
                 name: $this->prefix . $file->getFilenameWithoutExtension(),
-                path: $file->getPathname()
+                path: $file->getPathname(),
             ))
             ->values()
             ->all();
