@@ -3,6 +3,8 @@
 ## To Do List
 
 - [ ] support dependent field
+- [ ] support responsive layout
+- [ ] index / detail views
 - [ ] icons search bar
 - [ ] restyle modal
 - [ ] configure icon size for preview
