@@ -27,6 +27,7 @@
                 <!-- />-->
 
                 <DefaultButton
+                    type="button"
                     @click="() => isSelecting = true"
                 >
                     Select icon
