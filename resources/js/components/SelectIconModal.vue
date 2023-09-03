@@ -13,19 +13,19 @@
             <div>
                 <div class="border-t border-b px-8 py-3 flex items-center justify-between">
                     <div class="-mx-2 w-1/2 px-2">
-                        <SelectControl
-                            :options="iconsetOptions"
-                            :selected="currentIconset"
-                            @change="(iconset) => currentIconset = iconset"
-                        />
-                    </div>
-
-                    <div class="-mx-2 w-1/2 px-2">
                         <input
                             v-model="search"
                             type="search"
                             placeholder="Search icons..."
                             class="w-full form-control form-input form-input-bordered"
+                        />
+                    </div>
+
+                    <div class="-mx-2 w-1/2 px-2">
+                        <SelectControl
+                            :options="iconsetOptions"
+                            :selected="currentIconset"
+                            @change="(iconset) => currentIconset = iconset"
                         />
                     </div>
                 </div>
@@ -39,13 +39,13 @@
                     >
                         <ul
                             v-if="icons.length > 0"
-                            class="grid gap-6"
-                            style="grid-template-columns: repeat(8, minmax(0, 1fr));"
+                            class="grid gap-2"
+                            style="grid-template-columns: repeat(12, minmax(0, 1fr));"
                         >
                             <li v-for="icon in filteredIcons" :key="icon.name" class="w-full">
                                 <button
                                     type="button"
-                                    class="block p-4 w-full border-2 rounded"
+                                    class="block p-2 w-full border-2 rounded"
                                     :class="currentIcon === icon.name ? 'border-primary-500 bg-primary-50' : 'border-transparent'"
                                     @click="selectIcon(icon)"
                                 >
