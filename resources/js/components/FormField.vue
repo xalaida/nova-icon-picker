@@ -8,10 +8,10 @@
         <template #field>
             <div>
                 <div
-                    v-if="contents"
+                    v-if="preview"
                     style="width: 150px; height: 150px"
                     class="mb-4 bg-gray-50 dark:bg-gray-700 relative aspect-square p-4 flex items-center justify-center border-2 border-gray-200 dark:border-gray-700 overflow-hidden rounded-lg"
-                    v-html="contents"
+                    v-html="preview"
                 />
 
                 <!-- @todo add custom details -->
@@ -69,8 +69,8 @@ export default {
 
     data() {
         return {
-            contents: this.field.contents,
-            isSelecting: true
+            preview: this.field.preview,
+            isSelecting: false
         }
     },
 
@@ -85,7 +85,7 @@ export default {
 
         setIcon(name, contents) {
             this.value = name
-            this.contents = contents
+            this.preview = contents
 
             this.emitFieldValueChange(this.fieldAttribute, this.value)
         },
