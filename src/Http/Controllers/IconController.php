@@ -20,6 +20,8 @@ class IconController
 
         // @todo throw 404 if iconset is not available.
 
+        // @todo configure icon caching mechanism.
+
         return response()->json(
             $field->getIconset($request->iconset)->icons()
         );
