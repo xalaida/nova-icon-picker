@@ -5,6 +5,7 @@ namespace Nevadskiy\Nova\Icon;
 use Illuminate\Support\Str;
 use Laravel\Nova\Fields\Field;
 use Laravel\Nova\Fields\PresentsImages;
+use RuntimeException;
 
 /**
  * @todo asRawSvg() method that allows to pass custom svg icon.
@@ -104,6 +105,10 @@ class Icon extends Field
      */
     public function getIconset(string $iconset): SvgIconset
     {
+        if (! isset($this->iconsets[$iconset])) {
+            throw new RuntimeException(__('Iconset [:iconset] is missing.', ['iconset' => $iconset]));
+        }
+
         return $this->iconsets[$iconset];
     }
 
@@ -114,7 +119,7 @@ class Icon extends Field
     {
         [$iconset, $icon] = $this->parse($name);
 
-        return $this->iconsets[$iconset]->icon($icon);
+        return $this->getIconset($iconset)->icon($icon);
     }
 
     /**
