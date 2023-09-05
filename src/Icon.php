@@ -4,6 +4,7 @@ namespace Nevadskiy\Nova\Icon;
 
 use Illuminate\Support\Str;
 use Laravel\Nova\Fields\Field;
+use Laravel\Nova\Fields\PresentsImages;
 
 /**
  * @todo asRawSvg() method that allows to pass custom svg icon.
@@ -11,6 +12,8 @@ use Laravel\Nova\Fields\Field;
  */
 class Icon extends Field
 {
+    use PresentsImages;
+
     /**
      * @inheritdoc
      */
@@ -36,6 +39,16 @@ class Icon extends Field
      * @var array
      */
     public $iconsets = [];
+
+    /**
+     * @inheritdoc
+     */
+    public function __construct($name, $attribute = null, callable $resolveCallback = null)
+    {
+        parent::__construct($name, $attribute, $resolveCallback);
+
+        $this->detailWidth = 64;
+    }
 
     /**
      * Specify the iconset separator for an icon name.
@@ -128,7 +141,7 @@ class Icon extends Field
      */
     public function jsonSerialize(): array
     {
-        return array_merge(parent::jsonSerialize(), [
+        return array_merge(parent::jsonSerialize(), $this->imageAttributes(), [
             'iconsets' => $this->iconsets,
             'preview' => $this->resolvePreview(),
             'iconset' => $this->resolveIconset(),
