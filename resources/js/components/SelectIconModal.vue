@@ -90,7 +90,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 
-const props = defineProps(['currentIcon', 'iconsets'])
+const props = defineProps(['resourceName', 'attribute', 'currentIcon', 'iconsets'])
 
 const emits = defineEmits(['close', 'select'])
 
@@ -113,7 +113,7 @@ const fetchIcons = async () => {
     fetching.value = true
 
     // @todo handle exception
-    const response = await Nova.request().get(`/nova-vendor/iconsets/${currentIconset.value}/icons`)
+    const response = await Nova.request().get(`/${props.resourceName}/fields/${props.attribute}/iconsets/${currentIconset.value}/icons`)
 
     fetching.value = false
 

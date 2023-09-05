@@ -100,13 +100,19 @@ class Icon extends Field
      */
     protected function parse(string $value): array
     {
-        $parts = explode($this->separator, $value, 2);
+        $segments = explode($this->separator, $value, 2);
 
-        [$iconset, $icon] = count($parts) === 1
-            ? [$this->defaultIconset, $parts[0]]
-            : $parts;
+        if (count($segments) === 1) {
+            return [$this->defaultIconset, $value];
+        }
 
-        return [$iconset, $icon];
+        $iconset = $segments[0];
+
+        if (isset($this->iconsets[$iconset])) {
+            return [$iconset, $segments[1]];
+        }
+
+        return [$this->defaultIconset, $value];
     }
 
     /**
@@ -125,6 +131,8 @@ class Icon extends Field
      */
     protected function resolvePreview(): ?string
     {
+        // @todo resolve only if field is visible.
+
         if ($this->value === null) {
             return null;
         }

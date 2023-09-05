@@ -3,4 +3,4 @@
 use Illuminate\Support\Facades\Route;
 use Nevadskiy\Nova\Icon\Http\Controllers\IconController;
 
-Route::get('/iconsets/{iconset}/icons', [IconController::class, 'index']);
+Route::get('/{resource}/fields/{field}/iconsets/{iconset}/icons', [IconController::class, 'index']);
