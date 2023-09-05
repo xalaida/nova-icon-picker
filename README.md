@@ -4,10 +4,14 @@
 
 - [ ] support dependent field
 - [ ] support responsive layout
-- [ ] index / detail views
+- [ ] support readonly field
+- [ ] support nullable icons
+- [ ] support removable icons
+- [ ] check validation errors
+- [x] index / detail views
 - [ ] icons search bar
 - [ ] restyle modal
-- [ ] configure icon size for preview
+- [x] configure icon size for preview
 - [ ] configure picker grid (modal size, columns, icon size)
 - [ ] ukrainian localization
 - [ ] cache API json responses

@@ -17,15 +17,6 @@
                 <!-- @todo add custom details -->
                 <!-- <p class="font-semibold text-xs mt-1">Icon details here...</p>-->
 
-                <!-- <input-->
-                <!--     :id="field.attribute"-->
-                <!--     type="text"-->
-                <!--     class="w-full form-control form-input form-input-bordered"-->
-                <!--     :class="errorClasses"-->
-                <!--     :placeholder="field.name"-->
-                <!--     v-model="value"-->
-                <!-- />-->
-
                 <DefaultButton
                     type="button"
                     @click="() => isSelecting = true"
