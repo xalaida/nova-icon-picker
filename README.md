@@ -11,8 +11,8 @@
 - [x] check validation errors
 - [x] icons search bar
 - [x] configure icon size for preview
+- [x] empty icon sets
 - [ ] restyle modal
-- [ ] empty icon sets
 - [ ] configure picker grid (modal size, columns, icon size)
 - [ ] ukrainian localization
 - [ ] cache API json responses
