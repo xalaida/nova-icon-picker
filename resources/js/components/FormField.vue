@@ -9,20 +9,34 @@
             <div>
                 <div
                     v-if="preview"
-                    style="width: 150px; height: 150px"
-                    class="mb-4 bg-gray-50 dark:bg-gray-700 relative aspect-square p-4 flex items-center justify-center border-2 border-gray-200 dark:border-gray-700 overflow-hidden rounded-lg"
-                    v-html="preview"
-                />
-
-                <!-- @todo add custom details -->
-                <!-- <p class="font-semibold text-xs mt-1">Icon details here...</p>-->
-
-                <DefaultButton
-                    type="button"
-                    @click="() => isSelecting = true"
+                    class="relative inline-block p-4 bg-gray-50 dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-700 rounded-lg"
                 >
-                    Select icon
-                </DefaultButton>
+                    <div
+                        style="width: 150px; height: 150px"
+                        v-html="preview"
+                    />
+
+                    <RemoveButton
+                        v-if="shouldShowRemoveButton"
+                        type="button"
+                        class="absolute z-20 top-[-10px] right-[-9px]"
+                        @click="onRemove"
+                        v-tooltip="__('Remove')"
+                    />
+                </div>
+
+                <p v-if="value" class="font-semibold text-xs mt-1 mb-4">
+                    {{ value }}
+                </p>
+
+                <div>
+                    <DefaultButton
+                        type="button"
+                        @click="() => isSelecting = true"
+                    >
+                        Select icon
+                    </DefaultButton>
+                </div>
 
                 <SelectIconModal
                     v-if="isSelecting"
@@ -40,7 +54,7 @@
 </template>
 
 <script>
-import { FormField, HandlesValidationErrors } from 'laravel-nova'
+import {FormField, HandlesValidationErrors} from 'laravel-nova'
 import SelectIconModal from "./SelectIconModal.vue";
 
 export default {
@@ -67,13 +81,19 @@ export default {
         }
     },
 
+    computed: {
+        shouldShowRemoveButton() {
+            return this.value && this.currentField.nullable && !this.currentlyIsReadonly
+        }
+    },
+
     methods: {
         setInitialValue() {
             this.value = this.field.value
         },
 
         fill(formData) {
-            formData.append(this.fieldAttribute, this.value)
+            formData.append(this.fieldAttribute, this.value ?? '')
         },
 
         setIcon(name, contents) {
@@ -88,6 +108,12 @@ export default {
             this.iconset = iconset
 
             this.isSelecting = false
+        },
+
+        onRemove() {
+            this.value = null
+            this.iconset = null
+            this.preview = null
         }
     },
 }

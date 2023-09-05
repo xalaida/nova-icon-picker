@@ -47,6 +47,7 @@ class Icon extends Field
     {
         parent::__construct($name, $attribute, $resolveCallback);
 
+        $this->indexWidth = 32;
         $this->detailWidth = 64;
     }
 
@@ -80,7 +81,7 @@ class Icon extends Field
         $this->iconsets[$name] = new SvgIconset(
             path: $path,
             display: $display,
-            prefix: $this->prefix($name)
+            prefix: $this->getPrefix($name)
         );
 
         return $this;
@@ -89,10 +90,10 @@ class Icon extends Field
     /**
      * Get the iconset prefix for an icon name.
      */
-    protected function prefix(string $iconset): string
+    protected function getPrefix(string $iconset): string
     {
         if ($this->defaultIconset === $iconset) {
-            return $iconset;
+            return '';
         }
 
         return $iconset . $this->separator;

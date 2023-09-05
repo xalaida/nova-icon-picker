@@ -8,6 +8,8 @@
                 :style="{ maxWidth: `${field.maxWidth || field.detailWidth}px` }"
                 v-html="field.preview"
             />
+
+            <span v-else>&mdash;</span>
         </template>
     </PanelItem>
 </template>
