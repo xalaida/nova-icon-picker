@@ -118,7 +118,6 @@ const filteredIcons = computed(() => icons.value.filter((icon) => icon.name.incl
 const fetchIcons = async () => {
     fetching.value = true
 
-    // @todo handle exception
     const response = await Nova.request().get(`/nova-vendor/icon-picker/${props.resourceName}/fields/${props.attribute}/iconsets/${currentIconset.value}`)
 
     fetching.value = false
