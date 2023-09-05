@@ -25,7 +25,7 @@
                         <SelectControl
                             :options="iconsetOptions"
                             :selected="currentIconset"
-                            @change="(iconset) => currentIconset = iconset"
+                            @change="changeIconset"
                         />
                     </div>
                 </div>
@@ -90,16 +90,22 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 
-const props = defineProps(['resourceName', 'attribute', 'iconsets', 'currentIcon'])
+const props = defineProps(['resourceName', 'attribute', 'iconsets', 'currentIconset', 'currentIcon'])
 
 const emits = defineEmits(['close', 'select'])
 
-const currentIconset = ref(Object.keys(props.iconsets)[0])
+const currentIconset = ref(props.currentIconset ?? Object.keys(props.iconsets)[0])
 
 const iconsetOptions = computed(() => Object.keys(props.iconsets).map((iconset) => ({
     label: props.iconsets[iconset].display,
     value: iconset,
 })))
+
+const changeIconset = async (iconset) => {
+    currentIconset.value = iconset
+
+    await fetchIcons()
+}
 
 const fetching = ref(false)
 
@@ -117,14 +123,14 @@ const fetchIcons = async () => {
 
     fetching.value = false
 
-    return response.data
+    icons.value = response.data
 }
 
 const selectIcon = (icon) => {
-    emits('select', icon.name, icon.contents)
+    emits('select', currentIconset.value, icon.name, icon.contents)
 }
 
 onMounted(async () => {
-    icons.value = await fetchIcons()
+    await fetchIcons()
 })
 </script>

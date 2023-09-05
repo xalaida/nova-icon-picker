@@ -130,7 +130,8 @@ class Icon extends Field
     {
         return array_merge(parent::jsonSerialize(), [
             'iconsets' => $this->iconsets,
-            'preview' => $this->resolvePreview()
+            'preview' => $this->resolvePreview(),
+            'iconset' => $this->resolveIconset(),
         ]);
     }
 
@@ -139,12 +140,22 @@ class Icon extends Field
      */
     protected function resolvePreview(): ?string
     {
-        // @todo resolve only if field is visible.
-
         if ($this->value === null) {
             return null;
         }
 
         return $this->resolveIcon($this->value)->contents();
+    }
+
+    /**
+     * Resolve the current iconset.
+     */
+    protected function resolveIconset(): ?string
+    {
+        if ($this->value === null) {
+            return null;
+        }
+
+        return $this->parse($this->value)[0];
     }
 }

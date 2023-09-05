@@ -38,6 +38,7 @@
                     :resource-name="resourceName"
                     :attribute="field.attribute"
                     :iconsets="field.iconsets"
+                    :current-iconset="iconset"
                     :current-icon="value"
                     @close="isSelecting = false"
                     @select="onSelect"
@@ -70,6 +71,7 @@ export default {
     data() {
         return {
             preview: this.field.preview,
+            iconset: this.field.iconset,
             isSelecting: false
         }
     },
@@ -90,8 +92,9 @@ export default {
             this.emitFieldValueChange(this.fieldAttribute, this.value)
         },
 
-        onSelect(name, contents) {
-            this.setIcon(name, contents)
+        onSelect(iconset, icon, contents) {
+            this.setIcon(icon, contents)
+            this.iconset = iconset
 
             this.isSelecting = false
         }
