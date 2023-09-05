@@ -4,13 +4,15 @@ namespace Nevadskiy\Nova\Icon;
 
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
+use JsonSerializable;
 
-class SvgIconset
+class SvgIconset implements JsonSerializable
 {
     public const EXTENSION = '.svg';
 
     public function __construct(
         public string $path,
+        public string $display,
         public string $prefix = '',
     ) {
     }
@@ -32,5 +34,12 @@ class SvgIconset
             ))
             ->values()
             ->all();
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'display' => $this->display,
+        ];
     }
 }

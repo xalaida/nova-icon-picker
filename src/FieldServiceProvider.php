@@ -25,14 +25,6 @@ class FieldServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register any application services.
-     */
-    public function register(): void
-    {
-        $this->app->singleton(IconRegistry::class);
-    }
-
-    /**
      * Register the tool's routes.
      */
     protected function routes(): void
