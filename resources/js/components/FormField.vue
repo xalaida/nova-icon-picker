@@ -35,6 +35,8 @@
 
                 <SelectIconModal
                     v-if="isSelecting"
+                    :resource-name="resourceName"
+                    :attribute="field.attribute"
                     :iconsets="field.iconsets"
                     :current-icon="value"
                     @close="isSelecting = false"

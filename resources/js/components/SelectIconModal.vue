@@ -90,15 +90,15 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 
-const props = defineProps(['resourceName', 'attribute', 'currentIcon', 'iconsets'])
+const props = defineProps(['resourceName', 'attribute', 'iconsets', 'currentIcon'])
 
 const emits = defineEmits(['close', 'select'])
 
-const currentIconset = ref(props.iconsets[0].name)
+const currentIconset = ref(Object.keys(props.iconsets)[0])
 
-const iconsetOptions = computed(() => props.iconsets.map((iconset) => ({
-    label: iconset.display,
-    value: iconset.name,
+const iconsetOptions = computed(() => Object.keys(props.iconsets).map((iconset) => ({
+    label: props.iconsets[iconset].display,
+    value: iconset,
 })))
 
 const fetching = ref(false)
@@ -113,7 +113,7 @@ const fetchIcons = async () => {
     fetching.value = true
 
     // @todo handle exception
-    const response = await Nova.request().get(`/${props.resourceName}/fields/${props.attribute}/iconsets/${currentIconset.value}/icons`)
+    const response = await Nova.request().get(`/nova-vendor/icon-picker/${props.resourceName}/fields/${props.attribute}/iconsets/${currentIconset.value}`)
 
     fetching.value = false
 

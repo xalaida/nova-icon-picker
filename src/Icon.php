@@ -86,6 +86,14 @@ class Icon extends Field
     }
 
     /**
+     * Get the iconset by the name.
+     */
+    public function getIconset(string $iconset): SvgIconset
+    {
+        return $this->iconsets[$iconset];
+    }
+
+    /**
      * Resolve the icon by the name.
      */
     public function resolveIcon(string $name): SvgIcon

@@ -34,7 +34,7 @@ class FieldServiceProvider extends ServiceProvider
         }
 
         Route::middleware(['nova'])
-            ->prefix('nova-vendor')
+            ->prefix('nova-vendor/icon-picker')
             ->group(__DIR__.'/../routes/api.php');
     }
 }

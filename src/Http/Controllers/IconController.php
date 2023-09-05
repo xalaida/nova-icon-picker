@@ -4,7 +4,7 @@ namespace Nevadskiy\Nova\Icon\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Nevadskiy\Salo\Nova\Fields\Icon;
+use Nevadskiy\Nova\Icon\Icon;
 
 class IconController
 {
@@ -20,8 +20,8 @@ class IconController
 
         // @todo throw 404 if iconset is not available.
 
-        return response()->json([
-            'preview' => $field->getIconset($request->iconset)->icons(),
-        ]);
+        return response()->json(
+            $field->getIconset($request->iconset)->icons()
+        );
     }
 }
