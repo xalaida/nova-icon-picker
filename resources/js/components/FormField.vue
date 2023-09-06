@@ -12,7 +12,8 @@
                     class="relative inline-block p-4 bg-gray-50 dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-700 rounded-lg"
                 >
                     <div
-                        style="width: 150px; height: 150px"
+                        :class="[{ rounded: field.rounded }, field.aspect]"
+                        :style="{ width: `${field.detailWidth}px` }"
                         v-html="preview"
                     />
 
