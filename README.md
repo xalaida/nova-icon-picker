@@ -23,6 +23,7 @@
 - [ ] configure picker grid (modal size, columns, icon size)
 - [ ] fix css error
 - [ ] ukrainian localization
+- [ ] prepare package for prod
 
 ## Next Version (Raw SVG)
 
