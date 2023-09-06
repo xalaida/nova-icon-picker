@@ -15,12 +15,12 @@
 - [x] empty icons view
 - [x] add ability to configure iconsets from service provider.
 - [x] cache API json responses
-- [ ] use namespace: Nevadskiy\Nova\IconPicker\Icon
+- [x] use namespace: Nevadskiy\Nova\IconPicker\Icon
+- [x] support readonly field
 - [ ] support default icon value (fallback value)
 - [ ] asRawSvg() method that allows to pass custom svg icon.
 - [ ] support dependent field
 - [ ] support responsive layout
-- [ ] support readonly field
 - [ ] configure picker grid (modal size, columns, icon size)
 - [ ] ukrainian localization
 - [ ] Iconify API

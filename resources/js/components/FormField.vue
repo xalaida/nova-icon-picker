@@ -30,25 +30,27 @@
                     {{ value }}
                 </p>
 
-                <div>
-                    <DefaultButton
-                        type="button"
-                        @click="() => isSelecting = true"
-                    >
-                        Select icon
-                    </DefaultButton>
-                </div>
+                <template v-if="!field.readonly">
+                    <div>
+                        <DefaultButton
+                            type="button"
+                            @click="() => isSelecting = true"
+                        >
+                            Select icon
+                        </DefaultButton>
+                    </div>
 
-                <SelectIconModal
-                    v-if="isSelecting"
-                    :resource-name="resourceName"
-                    :attribute="field.attribute"
-                    :iconsets="field.iconsets"
-                    :current-iconset="iconset"
-                    :current-icon="value"
-                    @close="isSelecting = false"
-                    @select="onSelect"
-                />
+                    <SelectIconModal
+                        v-if="isSelecting"
+                        :resource-name="resourceName"
+                        :attribute="field.attribute"
+                        :iconsets="field.iconsets"
+                        :current-iconset="iconset"
+                        :current-icon="value"
+                        @close="isSelecting = false"
+                        @select="onSelect"
+                    />
+                </template>
             </div>
         </template>
     </DefaultField>
@@ -84,7 +86,7 @@ export default {
 
     computed: {
         shouldShowResetButton() {
-            return this.value && this.currentField.resettable
+            return this.value && this.currentField.resettable && !this.currentField.readonly
                 // && !this.currentlyIsReadonly
         }
     },
