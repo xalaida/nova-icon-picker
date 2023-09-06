@@ -17,7 +17,7 @@
 - [x] cache API json responses
 - [x] use namespace: Nevadskiy\Nova\IconPicker\Icon
 - [x] support readonly field
-- [ ] support default icon value (fallback value)
+- [x] support default icon value
 - [ ] asRawSvg() method that allows to pass custom svg icon.
 - [ ] support dependent field
 - [ ] support responsive layout

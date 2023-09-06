@@ -5,6 +5,7 @@ namespace Nevadskiy\Nova\IconPicker;
 use Illuminate\Support\Str;
 use Laravel\Nova\Fields\Field;
 use Laravel\Nova\Fields\PresentsImages;
+use Laravel\Nova\Http\Requests\NovaRequest;
 use RuntimeException;
 
 class Icon extends Field
@@ -133,25 +134,29 @@ class Icon extends Field
      */
     public function jsonSerialize(): array
     {
+        $request = resolve(NovaRequest::class);
+
+        $value = $this->value ?? $this->resolveDefaultValue($request);
+
         return array_merge(parent::jsonSerialize(), $this->imageAttributes(), [
             'resettable' => $this->resettable,
             'iconsets' => array_values($this->iconsets),
-            'preview' => $this->resolveIcon()?->contents(),
-            'iconset' => $this->resolveIconset()?->name,
+            'preview' => $value !== null
+                ? $this->resolveIcon($value)?->contents()
+                : null,
+            'iconset' => $value !== null
+                ? $this->resolveIconset($value)?->name
+                : null,
         ]);
     }
 
     /**
      * Resolve the current icon.
      */
-    protected function resolveIcon(): ?SvgIcon
+    protected function resolveIcon(string $value): ?SvgIcon
     {
-        if ($this->value === null) {
-            return null;
-        }
-
         foreach ($this->iconsets as $iconset) {
-            $icon = $iconset->match($this->value);
+            $icon = $iconset->match($value);
 
             if (! is_null($icon)) {
                 return $icon;
@@ -159,7 +164,7 @@ class Icon extends Field
         }
 
         if (! is_null($this->fallbackIconset)) {
-            return $this->getIconset($this->fallbackIconset)->icon($this->value);
+            return $this->getIconset($this->fallbackIconset)->icon($value);
         }
 
         return null;
@@ -168,14 +173,10 @@ class Icon extends Field
     /**
      * Resolve the current iconset.
      */
-    protected function resolveIconset(): ?SvgIconset
+    protected function resolveIconset(string $value): ?SvgIconset
     {
-        if ($this->value === null) {
-            return null;
-        }
-
         foreach ($this->iconsets as $iconset) {
-            $icon = $iconset->match($this->value);
+            $icon = $iconset->match($value);
 
             if (! is_null($icon)) {
                 return $iconset;
