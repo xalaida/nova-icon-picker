@@ -5,7 +5,6 @@ namespace Nevadskiy\Nova\IconPicker;
 use Illuminate\Support\Str;
 use Laravel\Nova\Fields\Field;
 use Laravel\Nova\Fields\PresentsImages;
-use Laravel\Nova\Http\Requests\NovaRequest;
 use RuntimeException;
 
 class Icon extends Field
@@ -134,59 +133,39 @@ class Icon extends Field
      */
     public function jsonSerialize(): array
     {
-        $request = resolve(NovaRequest::class);
+        $serialization = parent::jsonSerialize();
 
-        $value = $this->value ?? $this->resolveDefaultValue($request);
+        $value = $serialization['value'];
 
-        return array_merge(parent::jsonSerialize(), $this->imageAttributes(), [
+        [$iconset, $icon] = $this->resolveIconsetWithIcon($value);
+
+        return array_merge($serialization, $this->imageAttributes(), [
             'resettable' => $this->resettable,
             'iconsets' => array_values($this->iconsets),
-            'preview' => $value !== null
-                ? $this->resolveIcon($value)?->contents()
-                : null,
-            'iconset' => $value !== null
-                ? $this->resolveIconset($value)?->name
-                : null,
+            'iconset' => $iconset?->name,
+            'preview' => $icon?->contents(),
         ]);
     }
 
     /**
-     * Resolve the current icon.
+     * Resolve the current iconset and icon.
      */
-    protected function resolveIcon(string $value): ?SvgIcon
+    protected function resolveIconsetWithIcon(string $value): array
     {
         foreach ($this->iconsets as $iconset) {
             $icon = $iconset->match($value);
 
             if (! is_null($icon)) {
-                return $icon;
+                return [$iconset, $icon];
             }
         }
 
         if (! is_null($this->fallbackIconset)) {
-            return $this->getIconset($this->fallbackIconset)->icon($value);
+            $iconset = $this->getIconset($this->fallbackIconset);
+
+            return [$iconset, $iconset->icon($value)];
         }
 
-        return null;
-    }
-
-    /**
-     * Resolve the current iconset.
-     */
-    protected function resolveIconset(string $value): ?SvgIconset
-    {
-        foreach ($this->iconsets as $iconset) {
-            $icon = $iconset->match($value);
-
-            if (! is_null($icon)) {
-                return $iconset;
-            }
-        }
-
-        if (! is_null($this->fallbackIconset)) {
-            return $this->getIconset($this->fallbackIconset);
-        }
-
-        return null;
+        return [null, null];
     }
 }
