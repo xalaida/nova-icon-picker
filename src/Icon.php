@@ -24,6 +24,13 @@ class Icon extends Field
     public $component = 'icon-field';
 
     /**
+     * Indicates if the reset button should be visible.
+     *
+     * @var bool
+     */
+    public $resettable = true;
+
+    /**
      * The list of iconsets.
      *
      * @var array
@@ -66,6 +73,16 @@ class Icon extends Field
         foreach (static::$configCallbacks as $callback) {
             $callback($this);
         }
+    }
+
+    /**
+     * Display the "reset" button.
+     */
+    public function resettable(bool $resettable = true): static
+    {
+        $this->resettable = $resettable;
+
+        return $this;
     }
 
     /**
@@ -117,6 +134,7 @@ class Icon extends Field
     public function jsonSerialize(): array
     {
         return array_merge(parent::jsonSerialize(), $this->imageAttributes(), [
+            'resettable' => $this->resettable,
             'iconsets' => array_values($this->iconsets),
             'preview' => $this->resolveIcon()?->contents(),
             'iconset' => $this->resolveIconset()?->name,

@@ -18,7 +18,7 @@
                     />
 
                     <RemoveButton
-                        v-if="shouldShowRemoveButton"
+                        v-if="shouldShowResetButton"
                         type="button"
                         class="absolute z-20 top-[-10px] right-[-9px]"
                         @click="onRemove"
@@ -83,8 +83,8 @@ export default {
     },
 
     computed: {
-        shouldShowRemoveButton() {
-            return this.value && this.currentField.nullable
+        shouldShowResetButton() {
+            return this.value && this.currentField.resettable
                 // && !this.currentlyIsReadonly
         }
     },
