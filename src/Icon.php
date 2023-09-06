@@ -7,10 +7,6 @@ use Laravel\Nova\Fields\Field;
 use Laravel\Nova\Fields\PresentsImages;
 use RuntimeException;
 
-/**
- * @todo asRawSvg() method that allows to pass custom svg icon.
- * @todo add ability to configure iconsets from service provider.
- */
 class Icon extends Field
 {
     use PresentsImages;
