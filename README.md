@@ -14,6 +14,7 @@
 - [x] restyle modal
 - [x] empty icons view
 - [x] add ability to configure iconsets from service provider.
+- [x] cache API json responses
 - [ ] use namespace: Nevadskiy\Nova\IconPicker\Icon
 - [ ] support default icon value (fallback value)
 - [ ] asRawSvg() method that allows to pass custom svg icon.
@@ -22,6 +23,4 @@
 - [ ] support readonly field
 - [ ] configure picker grid (modal size, columns, icon size)
 - [ ] ukrainian localization
-- [ ] cache API json responses
-- [ ] raw svg icons
 - [ ] Iconify API

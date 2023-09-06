@@ -3,11 +3,18 @@
 namespace Nevadskiy\Nova\Icon\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Middleware\SetCacheHeaders;
+use Illuminate\Routing\Controller;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Nevadskiy\Nova\Icon\Icon;
 
-class IconController
+class IconController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(SetCacheHeaders::using('public;max_age=900'));
+    }
+
     public function index(NovaRequest $request): JsonResponse
     {
         $resource = $request->newResource();
