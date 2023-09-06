@@ -1,6 +1,6 @@
 <?php
 
-namespace Nevadskiy\Nova\Icon;
+namespace Nevadskiy\Nova\IconPicker;
 
 use JsonSerializable;
 

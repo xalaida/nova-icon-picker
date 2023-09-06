@@ -1,12 +1,12 @@
 <?php
 
-namespace Nevadskiy\Nova\Icon\Http\Controllers;
+namespace Nevadskiy\Nova\IconPicker\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Middleware\SetCacheHeaders;
 use Illuminate\Routing\Controller;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Nevadskiy\Nova\Icon\Icon;
+use Nevadskiy\Nova\IconPicker\Icon;
 
 class IconController extends Controller
 {

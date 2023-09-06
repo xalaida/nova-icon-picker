@@ -11,13 +11,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Nevadskiy\\Nova\\Icon\\": "src/"
+            "Nevadskiy\\Nova\\IconPicker\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Nevadskiy\\Nova\\Icon\\FieldServiceProvider"
+                "Nevadskiy\\Nova\\IconPicker\\FieldServiceProvider"
             ]
         }
     },

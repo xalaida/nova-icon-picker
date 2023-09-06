@@ -1,6 +1,6 @@
 <?php
 
-namespace Nevadskiy\Nova\Icon;
+namespace Nevadskiy\Nova\IconPicker;
 
 use Illuminate\Support\Str;
 use Laravel\Nova\Fields\Field;
