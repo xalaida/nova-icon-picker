@@ -95,17 +95,17 @@
 </template>
 
 <script setup>
-import {ref, computed, onMounted} from 'vue'
+import { ref, computed, onMounted } from 'vue'
 
 const props = defineProps(['resourceName', 'attribute', 'iconsets', 'currentIconset', 'currentIcon'])
 
 const emits = defineEmits(['close', 'select'])
 
-const currentIconset = ref(props.currentIconset ?? Object.keys(props.iconsets)[0])
+const currentIconset = ref(props.currentIconset ?? props.iconsets[0].name)
 
-const iconsetOptions = computed(() => Object.keys(props.iconsets).map((iconset) => ({
-    label: props.iconsets[iconset].display,
-    value: iconset,
+const iconsetOptions = computed(() => props.iconsets.map((iconset) => ({
+    value: iconset.name,
+    label: iconset.display,
 })))
 
 const changeIconset = async (iconset) => {

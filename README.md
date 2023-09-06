@@ -13,9 +13,10 @@
 - [x] index / detail views
 - [x] restyle modal
 - [x] empty icons view
+- [x] add ability to configure iconsets from service provider.
 - [ ] use namespace: Nevadskiy\Nova\IconPicker\Icon
+- [ ] support default icon value (fallback value)
 - [ ] asRawSvg() method that allows to pass custom svg icon.
-- [ ] add ability to configure iconsets from service provider.
 - [ ] support dependent field
 - [ ] support responsive layout
 - [ ] support readonly field

@@ -2,6 +2,7 @@
 
 namespace Nevadskiy\Nova\Icon;
 
+use Illuminate\Support\Str;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use JsonSerializable;
@@ -12,9 +13,23 @@ class SvgIconset implements JsonSerializable
 
     public function __construct(
         public string $path,
+        public string $name,
         public string $display,
         public string $prefix = '',
     ) {
+    }
+
+    public function match(string $icon): ?SvgIcon
+    {
+        if (! $this->prefix) {
+            return null;
+        }
+
+        if (! Str::startsWith($icon, $this->prefix)) {
+            return null;
+        }
+
+        return $this->icon(Str::after($icon, $this->prefix));
     }
 
     public function icon(string $name): SvgIcon
@@ -39,6 +54,7 @@ class SvgIconset implements JsonSerializable
     public function jsonSerialize(): array
     {
         return [
+            'name' => $this->name,
             'display' => $this->display,
         ];
     }

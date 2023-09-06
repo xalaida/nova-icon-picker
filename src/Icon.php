@@ -12,23 +12,16 @@ class Icon extends Field
     use PresentsImages;
 
     /**
+     * The configuration callbacks.
+     *
+     * @var array
+     */
+    protected static $configCallbacks = [];
+
+    /**
      * @inheritdoc
      */
     public $component = 'icon-field';
-
-    /**
-     * The iconset separator for an icon name.
-     *
-     * @var string
-     */
-    public $separator = '/';
-
-    /**
-     * The name of the default iconset.
-     *
-     * @var string
-     */
-    public $defaultIconset = 'default';
 
     /**
      * The list of iconsets.
@@ -36,6 +29,13 @@ class Icon extends Field
      * @var array
      */
     public $iconsets = [];
+
+    /**
+     * The name of the fallback iconset.
+     *
+     * @var string
+     */
+    public $fallbackIconset;
 
     /**
      * @inheritdoc
@@ -46,96 +46,69 @@ class Icon extends Field
 
         $this->indexWidth = 32;
         $this->detailWidth = 64;
+
+        $this->applyConfigCallbacks();
     }
 
     /**
-     * Specify the iconset separator for an icon name.
+     * Configure the field using the given callback.
      */
-    public function separator(string $separator): static
+    public static function configure(callable $callback): void
     {
-        $this->separator = $separator;
+        static::$configCallbacks[] = $callback;
+    }
+
+    /**
+     * Apply the configuration callbacks to the field.
+     */
+    protected function applyConfigCallbacks(): void
+    {
+        foreach (static::$configCallbacks as $callback) {
+            $callback($this);
+        }
+    }
+
+    /**
+     * Specify the name of the fallback iconset.
+     */
+    public function fallbackIconset(string $iconset): static
+    {
+        $this->fallbackIconset = $iconset;
 
         return $this;
     }
 
     /**
-     * Specify the name of the default iconset.
+     * Register the SVG iconset using the given options.
      */
-    public function defaultIconset(string $iconset): static
-    {
-        $this->defaultIconset = $iconset;
-
-        return $this;
-    }
-
-    /**
-     * Register the SVG iconset by the given path.
-     */
-    public function iconset(string $path, string $display, string $name = null): static
+    public function iconset(string $path, string $display, string $name = null, string $prefix = ''): static
     {
         $name = $name ?? str_replace(' ', '_', Str::lower($name));
 
         $this->iconsets[$name] = new SvgIconset(
             path: $path,
+            name: $name,
             display: $display,
-            prefix: $this->getPrefix($name)
+            prefix: $prefix
         );
+
+        if (empty($prefix)) {
+            $this->fallbackIconset($name);
+        }
 
         return $this;
     }
 
     /**
-     * Get the iconset prefix for an icon name.
+     * Get the iconset by the given name.
      */
-    protected function getPrefix(string $iconset): string
+    public function getIconset(string $name): SvgIconset
     {
-        if ($this->defaultIconset === $iconset) {
-            return '';
+        if (! isset($this->iconsets[$name])) {
+            throw new RuntimeException(__('Iconset [:iconset] is missing.', ['iconset' => $name]));
         }
 
-        return $iconset . $this->separator;
-    }
-
-    /**
-     * Get the iconset by the name.
-     */
-    public function getIconset(string $iconset): SvgIconset
-    {
-        if (! isset($this->iconsets[$iconset])) {
-            throw new RuntimeException(__('Iconset [:iconset] is missing.', ['iconset' => $iconset]));
-        }
-
-        return $this->iconsets[$iconset];
-    }
-
-    /**
-     * Resolve the icon by the name.
-     */
-    public function resolveIcon(string $name): SvgIcon
-    {
-        [$iconset, $icon] = $this->parse($name);
-
-        return $this->getIconset($iconset)->icon($icon);
-    }
-
-    /**
-     * Parse the icon value to get the iconset and icon names.
-     */
-    protected function parse(string $value): array
-    {
-        $segments = explode($this->separator, $value, 2);
-
-        if (count($segments) === 1) {
-            return [$this->defaultIconset, $value];
-        }
-
-        $iconset = $segments[0];
-
-        if (isset($this->iconsets[$iconset])) {
-            return [$iconset, $segments[1]];
-        }
-
-        return [$this->defaultIconset, $value];
+        return $this->iconsets[$name];
     }
 
     /**
@@ -144,33 +117,57 @@ class Icon extends Field
     public function jsonSerialize(): array
     {
         return array_merge(parent::jsonSerialize(), $this->imageAttributes(), [
-            'iconsets' => $this->iconsets,
-            'preview' => $this->resolvePreview(),
-            'iconset' => $this->resolveIconset(),
+            'iconsets' => array_values($this->iconsets),
+            'preview' => $this->resolveIcon()?->contents(),
+            'iconset' => $this->resolveIconset()?->name,
         ]);
     }
 
     /**
-     * Resolve the icon preview.
+     * Resolve the current icon.
      */
-    protected function resolvePreview(): ?string
+    protected function resolveIcon(): ?SvgIcon
     {
         if ($this->value === null) {
             return null;
         }
 
-        return $this->resolveIcon($this->value)->contents();
+        foreach ($this->iconsets as $iconset) {
+            $icon = $iconset->match($this->value);
+
+            if (! is_null($icon)) {
+                return $icon;
+            }
+        }
+
+        if (! is_null($this->fallbackIconset)) {
+            return $this->getIconset($this->fallbackIconset)->icon($this->value);
+        }
+
+        return null;
     }
 
     /**
      * Resolve the current iconset.
      */
-    protected function resolveIconset(): ?string
+    protected function resolveIconset(): ?SvgIconset
     {
         if ($this->value === null) {
             return null;
         }
 
-        return $this->parse($this->value)[0];
+        foreach ($this->iconsets as $iconset) {
+            $icon = $iconset->match($this->value);
+
+            if (! is_null($icon)) {
+                return $iconset;
+            }
+        }
+
+        if (! is_null($this->fallbackIconset)) {
+            return $this->getIconset($this->fallbackIconset);
+        }
+
+        return null;
     }
 }

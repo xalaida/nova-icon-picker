@@ -83,7 +83,8 @@ export default {
 
     computed: {
         shouldShowRemoveButton() {
-            return this.value && this.currentField.nullable && !this.currentlyIsReadonly
+            return this.value && this.currentField.nullable
+                // && !this.currentlyIsReadonly
         }
     },
 
