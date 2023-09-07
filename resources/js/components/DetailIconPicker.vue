@@ -3,9 +3,8 @@
         <template #value>
             <span
                 v-if="field.preview"
-                class="inline-block w-full"
-                :class="[{ rounded: field.rounded }, field.aspect]"
-                :style="{ maxWidth: `${field.maxWidth || field.detailWidth}px` }"
+                class="inline-block"
+                :style="{ width: `${field.detailSize}px`, height: `${field.detailSize}px` }"
                 v-html="field.preview"
             />
 

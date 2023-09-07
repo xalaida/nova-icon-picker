@@ -3,13 +3,11 @@
 namespace Nevadskiy\Nova\IconPicker;
 
 use Laravel\Nova\Fields\Field;
-use Laravel\Nova\Fields\PresentsImages;
 use Laravel\Nova\Fields\SupportsDependentFields;
 use RuntimeException;
 
 class IconPicker extends Field
 {
-    use PresentsImages;
     use SupportsDependentFields;
 
     /**
@@ -46,14 +44,25 @@ class IconPicker extends Field
     public $fallbackIconset;
 
     /**
+     * The size of the icon on the index view.
+     *
+     * @var int
+     */
+    public $indexSize = 32;
+
+    /**
+     * The size of the icon on the detail view.
+     *
+     * @var int
+     */
+    public $detailSize = 64;
+
+    /**
      * @inheritdoc
      */
     public function __construct($name, $attribute = null, callable $resolveCallback = null)
     {
         parent::__construct($name, $attribute, $resolveCallback);
-
-        $this->indexWidth = 32;
-        $this->detailWidth = 64;
 
         $this->applyConfigCallbacks();
     }
@@ -74,6 +83,26 @@ class IconPicker extends Field
         foreach (static::$configCallbacks as $callback) {
             $callback($this);
         }
+    }
+
+    /**
+     * Specify the size of the icon on the index view.
+     */
+    public function indexSize(int $size): static
+    {
+        $this->indexSize = $size;
+
+        return $this;
+    }
+
+    /**
+     * Specify the size of the icon on the detail view.
+     */
+    public function detailSize(int $detailSize): static
+    {
+        $this->detailSize = $detailSize;
+
+        return $this;
     }
 
     /**
@@ -131,9 +160,11 @@ class IconPicker extends Field
 
         $value = $serialization['value'];
 
-        [$iconset, $icon] = $this->resolveIconsetWithIcon($value);
+        [$iconset, $icon] = $this->findMatchingIcon($value);
 
-        return array_merge($serialization, $this->imageAttributes(), [
+        return array_merge($serialization, [
+            'indexSize' => $this->indexSize,
+            'detailSize' => $this->detailSize,
             'resettable' => $this->resettable,
             'iconsets' => array_values($this->iconsets),
             'iconset' => $iconset?->name,
@@ -142,9 +173,9 @@ class IconPicker extends Field
     }
 
     /**
-     * Resolve the current iconset and icon.
+     * Resolve the icon with iconset.
      */
-    protected function resolveIconsetWithIcon(?string $value): array
+    protected function findMatchingIcon(?string $value): array
     {
         if (is_null($value)) {
             return [null, null];

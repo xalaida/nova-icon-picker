@@ -8,9 +8,9 @@
         <template #field>
             <div>
                 <div v-if="preview" class="relative inline-block p-4 bg-gray-50 dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-700 rounded-lg">
-                    <div
-                        :class="[{ rounded: currentField.rounded }, currentField.aspect]"
-                        :style="{ width: `${currentField.detailWidth}px` }"
+                    <span
+                        class="inline-block"
+                        :style="{ width: `${currentField.detailSize}px`, height: `${currentField.detailSize}px` }"
                         v-html="preview"
                     />
 

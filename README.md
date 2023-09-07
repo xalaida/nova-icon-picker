@@ -50,8 +50,8 @@ public function fields(): array
                 path: resource_path('svg/brands'), 
                 prefix: 'brands/' 
             )
-            ->indexWidth(16)
-            ->detailWidth(32),
+            ->indexSize(16)
+            ->detailSize(32),
     ]
 }
 ```
