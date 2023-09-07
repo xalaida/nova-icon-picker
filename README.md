@@ -5,6 +5,8 @@
 [![Latest Stable Version](https://img.shields.io/packagist/v/nevadskiy/nova-icon-picker)](https://packagist.org/packages/nevadskiy/nova-icon-picker)
 [![License](https://img.shields.io/github/license/nevadskiy/nova-icon-picker)](https://packagist.org/packages/nevadskiy/nova-icon-picker)
 
+![Screenshot](.github/screenshot.webp)
+
 ## ✅ Requirements
 
 - Laravel Nova 4
