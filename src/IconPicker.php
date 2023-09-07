@@ -2,7 +2,6 @@
 
 namespace Nevadskiy\Nova\IconPicker;
 
-use Illuminate\Support\Str;
 use Laravel\Nova\Fields\Field;
 use Laravel\Nova\Fields\PresentsImages;
 use Laravel\Nova\Fields\SupportsDependentFields;
@@ -80,16 +79,9 @@ class IconPicker extends Field
     /**
      * Register the SVG iconset using the given options.
      */
-    public function iconset(string $path, string $display, string $name = null, string $prefix = ''): static
+    public function iconset(string $name, string $path, string $prefix = ''): static
     {
-        $name = $name ?? str_replace(' ', '_', Str::lower($name));
-
-        $this->iconsets[$name] = new SvgIconset(
-            path: $path,
-            name: $name,
-            display: $display,
-            prefix: $prefix
-        );
+        $this->iconsets[$name] = new SvgIconset($name, $path, $prefix);
 
         if (empty($prefix)) {
             $this->fallbackIconset($name);

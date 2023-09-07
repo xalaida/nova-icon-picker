@@ -83,7 +83,7 @@ const currentIconset = ref(props.currentIconset ?? props.iconsets[0].name)
 
 const iconsetOptions = computed(() => props.iconsets.map((iconset) => ({
     value: iconset.name,
-    label: iconset.display,
+    label: iconset.name,
 })))
 
 const changeIconset = async (iconset) => {
