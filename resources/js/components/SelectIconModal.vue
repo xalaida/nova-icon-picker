@@ -2,7 +2,7 @@
     <Modal
         show
         size="5xl"
-        role="alertdialog"
+        role="dialog"
         @close-via-escape="$emit('close')"
     >
         <div class="bg-white dark:bg-gray-800">
