@@ -6,7 +6,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Middleware\SetCacheHeaders;
 use Illuminate\Routing\Controller;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Nevadskiy\Nova\IconPicker\Icon;
+use Nevadskiy\Nova\IconPicker\IconPicker;
 
 class IconController extends Controller
 {
@@ -20,7 +20,7 @@ class IconController extends Controller
         $resource = $request->newResource();
 
         $field = $resource->availableFields($request)
-            ->whereInstanceOf(Icon::class)
+            ->whereInstanceOf(IconPicker::class)
             ->findFieldByAttribute($request->field, function () {
                 abort(404);
             });

@@ -8,7 +8,7 @@ use Laravel\Nova\Fields\PresentsImages;
 use Laravel\Nova\Fields\SupportsDependentFields;
 use RuntimeException;
 
-class Icon extends Field
+class IconPicker extends Field
 {
     use PresentsImages;
     use SupportsDependentFields;
@@ -23,7 +23,7 @@ class Icon extends Field
     /**
      * @inheritdoc
      */
-    public $component = 'icon-field';
+    public $component = 'icon-picker';
 
     /**
      * Indicates if the reset button should be visible.

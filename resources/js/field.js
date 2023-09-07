@@ -1,9 +1,9 @@
-import IndexField from './components/IndexField'
-import DetailField from './components/DetailField'
-import FormField from './components/FormField'
+import IndexIconPicker from './components/IndexIconPicker'
+import DetailIconPicker from './components/DetailIconPicker'
+import FormIconPicker from './components/FormIconPicker'
 
 Nova.booting((app, store) => {
-  app.component('index-icon-field', IndexField)
-  app.component('detail-icon-field', DetailField)
-  app.component('form-icon-field', FormField)
+  app.component('index-icon-picker', IndexIconPicker)
+  app.component('detail-icon-picker', DetailIconPicker)
+  app.component('form-icon-picker', FormIconPicker)
 })
