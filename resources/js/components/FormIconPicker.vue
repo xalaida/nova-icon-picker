@@ -91,25 +91,20 @@ export default {
 
     methods: {
         setInitialValue() {
-            this.value = this.currentField.value
+            this.value = this.field.value
         },
 
         fill(formData) {
             formData.append(this.fieldAttribute, this.value ?? '')
         },
 
-        setIcon(name, contents) {
-            this.value = name
+        onSelect(iconset, icon, contents) {
+            this.iconset = iconset
+            this.value = icon
             this.preview = contents
+            this.isSelecting = false
 
             this.emitFieldValueChange(this.fieldAttribute, this.value)
-        },
-
-        onSelect(iconset, icon, contents) {
-            this.setIcon(icon, contents)
-            this.iconset = iconset
-
-            this.isSelecting = false
         },
 
         onRemove() {
