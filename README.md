@@ -18,9 +18,9 @@
 - [x] use namespace: Nevadskiy\Nova\IconPicker\Icon
 - [x] support readonly field
 - [x] support default icon value
+- [x] support responsive layout
+- [x] configure picker grid (modal size, columns, icon size)
 - [ ] support dependent field
-- [ ] support responsive layout
-- [ ] configure picker grid (modal size, columns, icon size)
 - [ ] fix css error
 - [ ] ukrainian localization
 - [ ] prepare package for prod
@@ -28,4 +28,5 @@
 ## Next Version (Raw SVG)
 
 - [ ] asRawSvg() method that allows to pass custom svg icon.
+- [ ] support CSS font awesome icons that uses format: "fa fa-clock".
 - [ ] Iconify API

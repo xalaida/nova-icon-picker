@@ -11,38 +11,38 @@
             </ModalHeader>
 
             <div>
-                <div class="border-t border-b px-6 py-3 flex items-center justify-between">
-                    <div class="-mx-2 w-1/2 px-2">
-                        <input
-                            v-model="search"
-                            type="search"
-                            placeholder="Search icons..."
-                            class="w-full form-control form-input form-input-bordered"
-                        />
-                    </div>
+                <div class="px-8 py-3 border-b border-gray-100 dark:border-gray-700">
+                    <div class="-mx-2 flex flex-col md:flex-row items-center justify-between">
+                        <div class="px-2 w-full md:w-1/2">
+                            <input
+                                v-model="search"
+                                type="search"
+                                placeholder="Search icons..."
+                                class="w-full form-control form-input form-input-bordered"
+                            />
+                        </div>
 
-                    <div class="-mx-2 w-1/2 px-2">
-                        <SelectControl
-                            :options="iconsetOptions"
-                            :selected="currentIconset"
-                            @change="changeIconset"
-                        />
+                        <div class="mt-2 md:mt-0 px-2 w-full md:w-1/2">
+                            <SelectControl
+                                :options="iconsetOptions"
+                                :selected="currentIconset"
+                                @change="changeIconset"
+                            />
+                        </div>
                     </div>
                 </div>
 
-                <div class="py-6 px-6 overflow-x-hidden overflow-y-auto" style="max-height: 600px">
+                <div class="py-6 px-8 overflow-x-hidden overflow-y-auto" style="max-height: 460px">
                     <LoadingView :loading="fetching">
                         <ul v-if="icons.length > 0" class="grid grid-cols-4 md:grid-cols-12 gap-2">
                             <li v-for="icon in filteredIcons" :key="icon.name" class="w-full">
                                 <button
                                     type="button"
-                                    class="block p-2 w-full border-2 rounded"
-                                    :class="currentIcon === icon.name ? 'border-primary-500 bg-primary-50' : 'border-transparent'"
+                                    class="w-full inline-flex items-center justify-center p-2 border-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700"
+                                    :class="currentIcon === icon.name ? 'border-primary-500' : 'border-transparent'"
                                     @click="selectIcon(icon)"
                                 >
-                                    <span class="flex items-center justify-center">
-                                        <span v-html="icon.contents" class="inline-block w-10 h-10"/>
-                                    </span>
+                                    <span v-html="icon.contents" class="inline-block w-10 h-10"/>
                                 </button>
                             </li>
                         </ul>
@@ -56,16 +56,6 @@
                         </div>
                     </LoadingView>
                 </div>
-
-                <!-- @todo add button to select icon from local computer -->
-                <!-- <textarea-->
-                <!--     v-if="false"-->
-                <!--     type="text"-->
-                <!--     class="block w-full form-control form-input form-input-bordered py-3 h-auto"-->
-                <!--     rows="5"-->
-                <!--     :placeholder="__('Paste SVG...')"-->
-                <!--     v-model="rawSvgIcon"-->
-                <!-- />-->
             </div>
 
             <ModalFooter>
