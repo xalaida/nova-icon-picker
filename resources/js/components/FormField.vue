@@ -7,10 +7,7 @@
     >
         <template #field>
             <div>
-                <div
-                    v-if="preview"
-                    class="relative inline-block p-4 bg-gray-50 dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-700 rounded-lg"
-                >
+                <div v-if="preview" class="relative inline-block p-4 bg-gray-50 dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-700 rounded-lg">
                     <div
                         :class="[{ rounded: field.rounded }, field.aspect]"
                         :style="{ width: `${field.detailWidth}px` }"
@@ -36,7 +33,7 @@
                             type="button"
                             @click="() => isSelecting = true"
                         >
-                            Select icon
+                            {{ __('Select icon') }}
                         </DefaultButton>
                     </div>
 

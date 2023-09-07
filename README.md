@@ -22,12 +22,6 @@
 - [x] configure picker grid (modal size, columns, icon size)
 - [x] fix css error
 - [x] remove unused dependencies
+- [x] ukrainian localization
 - [ ] support dependent field
-- [ ] ukrainian localization
 - [ ] prepare package for prod
-
-## Next Version (Raw SVG)
-
-- [ ] asRawSvg() method that allows to pass custom svg icon.
-- [ ] support CSS font awesome icons that uses format: "fa fa-clock".
-- [ ] Iconify API
