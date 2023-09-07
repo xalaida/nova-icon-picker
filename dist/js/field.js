@@ -48,7 +48,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     shouldShowResetButton: function shouldShowResetButton() {
-      return this.value && this.currentField.resettable && !this.currentlyIsReadonly;
+      return this.currentField.resettable && !this.currentlyIsReadonly && this.value;
     }
   },
   methods: {
@@ -366,7 +366,7 @@ var _hoisted_2 = {
   key: 1
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", null, [$props.field.contents ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", {
+  return $props.field.contents ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", {
     key: 0,
     "class": "inline-block",
     style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)({
@@ -374,7 +374,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       height: "".concat($props.field.indexSize, "px")
     }),
     innerHTML: $props.field.contents
-  }, null, 12 /* STYLE, PROPS */, _hoisted_1)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_2, "—"))]);
+  }, null, 12 /* STYLE, PROPS */, _hoisted_1)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_2, "—"));
 }
 
 /***/ }),
