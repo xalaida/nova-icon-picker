@@ -98,9 +98,9 @@ class IconPicker extends Field
     /**
      * Specify the size of the icon on the detail view.
      */
-    public function detailSize(int $detailSize): static
+    public function detailSize(int $size): static
     {
-        $this->detailSize = $detailSize;
+        $this->detailSize = $size;
 
         return $this;
     }
