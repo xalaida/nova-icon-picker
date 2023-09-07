@@ -112,7 +112,7 @@ class IconPicker extends Field
     {
         $this->iconsets[$name] = new SvgIconset($name, $path, $prefix);
 
-        if (! $prefix) {
+        if (! $prefix && ! $this->fallbackIconset) {
             $this->fallbackIconset($name);
         }
 
