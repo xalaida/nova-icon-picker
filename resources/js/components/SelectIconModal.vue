@@ -101,13 +101,15 @@ const search = ref('')
 const filteredIcons = computed(() => icons.value.filter((icon) => icon.name.includes(search.value)))
 
 const fetchIcons = async () => {
-    fetching.value = true
+    try {
+        fetching.value = true
 
-    const response = await Nova.request().get(`/nova-vendor/icon-picker/${props.resourceName}/fields/${props.attribute}/iconsets/${currentIconset.value}`)
+        const response = await Nova.request().get(`/nova-vendor/icon-picker/${props.resourceName}/fields/${props.attribute}/iconsets/${currentIconset.value}`)
 
-    fetching.value = false
-
-    icons.value = response.data
+        icons.value = response.data
+    } finally {
+        fetching.value = false
+    }
 }
 
 const selectIcon = (icon) => {

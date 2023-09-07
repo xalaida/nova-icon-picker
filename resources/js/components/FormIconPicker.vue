@@ -18,8 +18,8 @@
                         v-if="shouldShowResetButton"
                         type="button"
                         class="absolute z-20 top-[-10px] right-[-9px]"
-                        @click="onRemove"
-                        v-tooltip="__('Remove')"
+                        @click="reset"
+                        v-tooltip="__('Reset')"
                     />
                 </div>
 
@@ -44,7 +44,7 @@
                         :iconsets="currentField.iconsets"
                         :current-iconset="iconset"
                         :current-icon="value"
-                        @select="onSelect"
+                        @select="select"
                         @close="isSelecting = false"
                     />
                 </template>
@@ -98,7 +98,7 @@ export default {
             formData.append(this.fieldAttribute, this.value ?? '')
         },
 
-        onSelect(iconset, icon, contents) {
+        select(iconset, icon, contents) {
             this.iconset = iconset
             this.value = icon
             this.preview = contents
@@ -107,7 +107,7 @@ export default {
             this.emitFieldValueChange(this.fieldAttribute, this.value)
         },
 
-        onRemove() {
+        reset() {
             this.value = null
             this.iconset = null
             this.preview = null
