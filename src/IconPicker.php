@@ -168,7 +168,7 @@ class IconPicker extends Field
             'resettable' => $this->resettable,
             'iconsets' => array_values($this->iconsets),
             'iconset' => $iconset?->name,
-            'preview' => $icon?->contents(),
+            'contents' => $icon?->contents(),
         ]);
     }
 

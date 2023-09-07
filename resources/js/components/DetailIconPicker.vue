@@ -2,10 +2,10 @@
     <PanelItem :index="index" :field="field">
         <template #value>
             <span
-                v-if="field.preview"
+                v-if="field.contents"
                 class="inline-block"
                 :style="{ width: `${field.detailSize}px`, height: `${field.detailSize}px` }"
-                v-html="field.preview"
+                v-html="field.contents"
             />
 
             <span v-else>&mdash;</span>

@@ -113,7 +113,7 @@ const fetchIcons = async () => {
 }
 
 const selectIcon = (icon) => {
-    emits('select', currentIconset.value, icon.name, icon.contents)
+    emits('select', icon.name, icon.contents, currentIconset.value)
 }
 
 onMounted(async () => {

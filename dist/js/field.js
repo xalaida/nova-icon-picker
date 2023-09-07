@@ -41,7 +41,7 @@ __webpack_require__.r(__webpack_exports__);
   props: ['resourceName', 'resourceId', 'field'],
   data: function data() {
     return {
-      preview: this.field.preview,
+      contents: this.field.contents,
       iconset: this.field.iconset,
       isSelecting: false
     };
@@ -59,17 +59,17 @@ __webpack_require__.r(__webpack_exports__);
       var _this$value;
       formData.append(this.fieldAttribute, (_this$value = this.value) !== null && _this$value !== void 0 ? _this$value : '');
     },
-    select: function select(iconset, icon, contents) {
-      this.iconset = iconset;
+    select: function select(icon, contents, iconset) {
       this.value = icon;
-      this.preview = contents;
+      this.contents = contents;
+      this.iconset = iconset;
       this.isSelecting = false;
       this.emitFieldValueChange(this.fieldAttribute, this.value);
     },
     reset: function reset() {
       this.value = null;
+      this.contents = null;
       this.iconset = null;
-      this.preview = null;
     }
   }
 });
@@ -184,7 +184,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       };
     }();
     var selectIcon = function selectIcon(icon) {
-      emits('select', currentIconset.value, icon.name, icon.contents);
+      emits('select', icon.name, icon.contents, currentIconset.value);
     };
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.onMounted)( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
       return _regeneratorRuntime().wrap(function _callee3$(_context3) {
@@ -249,14 +249,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     field: $props.field
   }, {
     value: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [$props.field.preview ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", {
+      return [$props.field.contents ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", {
         key: 0,
         "class": "inline-block",
         style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)({
           width: "".concat($props.field.detailSize, "px"),
           height: "".concat($props.field.detailSize, "px")
         }),
-        innerHTML: $props.field.preview
+        innerHTML: $props.field.contents
       }, null, 12 /* STYLE, PROPS */, _hoisted_1)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_2, "—"))];
     }),
     _: 1 /* STABLE */
@@ -281,12 +281,14 @@ __webpack_require__.r(__webpack_exports__);
 
 var _hoisted_1 = {
   key: 0,
+  "class": "mb-4"
+};
+var _hoisted_2 = {
   "class": "relative inline-block p-4 bg-gray-50 dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-700 rounded-lg"
 };
-var _hoisted_2 = ["innerHTML"];
-var _hoisted_3 = {
-  key: 1,
-  "class": "font-semibold text-xs mt-1 mb-4"
+var _hoisted_3 = ["innerHTML"];
+var _hoisted_4 = {
+  "class": "mt-1 font-semibold text-xs"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_RemoveButton = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("RemoveButton");
@@ -301,20 +303,20 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "full-width-content": _ctx.fullWidthContent
   }, {
     field: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [$data.preview ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_ctx.value ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
         "class": "inline-block",
         style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)({
           width: "".concat(_ctx.currentField.detailSize, "px"),
           height: "".concat(_ctx.currentField.detailSize, "px")
         }),
-        innerHTML: $data.preview
-      }, null, 12 /* STYLE, PROPS */, _hoisted_2), $options.shouldShowResetButton ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_RemoveButton, {
+        innerHTML: $data.contents
+      }, null, 12 /* STYLE, PROPS */, _hoisted_3), $options.shouldShowResetButton ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_RemoveButton, {
         key: 0,
         type: "button",
         "class": "absolute z-20 top-[-10px] right-[-9px]",
         onClick: $options.reset
-      }, null, 8 /* PROPS */, ["onClick"])), [[_directive_tooltip, _ctx.__('Reset')]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _ctx.value ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.value), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), !_ctx.currentField.readonly ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
-        key: 2
+      }, null, 8 /* PROPS */, ["onClick"])), [[_directive_tooltip, _ctx.__('Reset')]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.value), 1 /* TEXT */)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), !_ctx.currentField.readonly ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+        key: 1
       }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DefaultButton, {
         type: "button",
         onClick: _cache[0] || (_cache[0] = function () {
@@ -334,7 +336,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "current-iconset": $data.iconset,
         "current-icon": _ctx.value,
         onSelect: $options.select,
-        onClose: _cache[1] || (_cache[1] = function ($event) {
+        onClose: _cache[1] || (_cache[1] = function () {
           return $data.isSelecting = false;
         })
       }, null, 8 /* PROPS */, ["resource-name", "attribute", "iconsets", "current-iconset", "current-icon", "onSelect"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 64 /* STABLE_FRAGMENT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])];
@@ -364,14 +366,14 @@ var _hoisted_2 = {
   key: 1
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", null, [$props.field.preview ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", null, [$props.field.contents ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", {
     key: 0,
     "class": "inline-block",
     style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)({
       width: "".concat($props.field.indexSize, "px"),
       height: "".concat($props.field.indexSize, "px")
     }),
-    innerHTML: $props.field.preview
+    innerHTML: $props.field.contents
   }, null, 12 /* STYLE, PROPS */, _hoisted_1)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_2, "—"))]);
 }
 
@@ -451,7 +453,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Modal, {
     show: "",
     size: "5xl",
-    role: "alertdialog",
+    role: "dialog",
     onCloseViaEscape: _cache[2] || (_cache[2] = function ($event) {
       return _ctx.$emit('close');
     })

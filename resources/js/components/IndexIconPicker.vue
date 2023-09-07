@@ -1,10 +1,10 @@
 <template>
     <span>
         <span
-            v-if="field.preview"
+            v-if="field.contents"
             class="inline-block"
             :style="{ width: `${field.indexSize}px`, height: `${field.indexSize}px` }"
-            v-html="field.preview"
+            v-html="field.contents"
         />
 
         <span v-else>&mdash;</span>

@@ -7,25 +7,27 @@
     >
         <template #field>
             <div>
-                <div v-if="preview" class="mb-1 relative inline-block p-4 bg-gray-50 dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-700 rounded-lg">
-                    <span
-                        class="inline-block"
-                        :style="{ width: `${currentField.detailSize}px`, height: `${currentField.detailSize}px` }"
-                        v-html="preview"
-                    />
+                <div v-if="value" class="mb-4">
+                    <div class="relative inline-block p-4 bg-gray-50 dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-700 rounded-lg">
+                        <span
+                            class="inline-block"
+                            :style="{ width: `${currentField.detailSize}px`, height: `${currentField.detailSize}px` }"
+                            v-html="contents"
+                        />
 
-                    <RemoveButton
-                        v-if="shouldShowResetButton"
-                        type="button"
-                        class="absolute z-20 top-[-10px] right-[-9px]"
-                        @click="reset"
-                        v-tooltip="__('Reset')"
-                    />
+                        <RemoveButton
+                            v-if="shouldShowResetButton"
+                            type="button"
+                            class="absolute z-20 top-[-10px] right-[-9px]"
+                            @click="reset"
+                            v-tooltip="__('Reset')"
+                        />
+                    </div>
+
+                    <p class="mt-1 font-semibold text-xs">
+                        {{ value }}
+                    </p>
                 </div>
-
-                <p v-if="value" class="font-semibold text-xs mb-4">
-                    {{ value }}
-                </p>
 
                 <template v-if="!currentField.readonly">
                     <div>
@@ -75,7 +77,7 @@ export default {
 
     data() {
         return {
-            preview: this.field.preview,
+            contents: this.field.contents,
             iconset: this.field.iconset,
             isSelecting: false
         }
@@ -98,10 +100,10 @@ export default {
             formData.append(this.fieldAttribute, this.value ?? '')
         },
 
-        select(iconset, icon, contents) {
-            this.iconset = iconset
+        select(icon, contents, iconset) {
             this.value = icon
-            this.preview = contents
+            this.contents = contents
+            this.iconset = iconset
             this.isSelecting = false
 
             this.emitFieldValueChange(this.fieldAttribute, this.value)
@@ -109,8 +111,8 @@ export default {
 
         reset() {
             this.value = null
+            this.contents = null
             this.iconset = null
-            this.preview = null
         }
     },
 }
