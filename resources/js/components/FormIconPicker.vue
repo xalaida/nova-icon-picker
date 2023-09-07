@@ -85,9 +85,9 @@ export default {
 
     computed: {
         shouldShowResetButton() {
-            return this.value
-                && this.currentField.resettable
+            return this.currentField.resettable
                 && !this.currentlyIsReadonly
+                && this.value
         }
     },
 
