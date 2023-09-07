@@ -45,7 +45,7 @@
                         :current-iconset="iconset"
                         :current-icon="value"
                         @select="select"
-                        @close="isSelecting = false"
+                        @close="() => isSelecting = false"
                     />
                 </template>
             </div>
