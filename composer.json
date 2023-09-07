@@ -1,9 +1,11 @@
 {
-    "name": "nevadskiy/icon-nova-field",
-    "description": "A Laravel Nova field.",
+    "name": "nevadskiy/nova-icon-picker",
+    "description": "Icon Picker for Laravel Nova.",
     "keywords": [
         "laravel",
-        "nova"
+        "nova",
+        "icon",
+        "picker"
     ],
     "license": "MIT",
     "require": {
