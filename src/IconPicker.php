@@ -158,9 +158,11 @@ class IconPicker extends Field
     {
         $serialization = parent::jsonSerialize();
 
-        $value = $serialization['value'];
+        $iconset = $serialization['value'] !== null
+            ? $this->findIconset($serialization['value'])
+            : null;
 
-        [$iconset, $icon] = $this->findMatchingIcon($value);
+        $icon = $iconset?->icon($serialization['value']);
 
         return array_merge($serialization, [
             'indexSize' => $this->indexSize,
@@ -173,28 +175,24 @@ class IconPicker extends Field
     }
 
     /**
-     * Resolve the icon with iconset.
+     * Find iconset by the given value.
      */
-    protected function findMatchingIcon(?string $value): array
+    protected function findIconset(string $value = null): ?SvgIconset
     {
         if (is_null($value)) {
-            return [null, null];
+            return null;
         }
 
         foreach ($this->iconsets as $iconset) {
-            $icon = $iconset->match($value);
-
-            if (! is_null($icon)) {
-                return [$iconset, $icon];
+            if ($iconset->match($value)) {
+                return $iconset;
             }
         }
 
         if (! is_null($this->fallbackIconset)) {
-            $iconset = $this->getIconset($this->fallbackIconset);
-
-            return [$iconset, $iconset->icon($value)];
+            return $this->getIconset($this->fallbackIconset);
         }
 
-        return [null, null];
+        return null;
     }
 }

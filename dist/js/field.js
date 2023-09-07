@@ -122,14 +122,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     __expose();
     var props = __props;
     var currentIconset = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)((_props$currentIconset = props.currentIconset) !== null && _props$currentIconset !== void 0 ? _props$currentIconset : props.iconsets[0].name);
-    var iconsetOptions = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () {
-      return props.iconsets.map(function (iconset) {
-        return {
-          value: iconset.name,
-          label: iconset.name
-        };
-      });
-    });
     var changeIconset = /*#__PURE__*/function () {
       var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(iconset) {
         return _regeneratorRuntime().wrap(function _callee$(_context) {
@@ -148,14 +140,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return _ref2.apply(this, arguments);
       };
     }();
-    var fetching = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
-    var icons = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
-    var search = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('');
-    var filteredIcons = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () {
-      return icons.value.filter(function (icon) {
-        return icon.name.includes(search.value);
+    var iconsetOptions = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () {
+      return props.iconsets.map(function (iconset) {
+        return {
+          value: iconset.name,
+          label: iconset.name
+        };
       });
     });
+    var fetching = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
+    var icons = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
     var fetchIcons = /*#__PURE__*/function () {
       var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
         var response;
@@ -183,6 +177,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return _ref3.apply(this, arguments);
       };
     }();
+    var search = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('');
+    var filteredIcons = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () {
+      return icons.value.filter(function (icon) {
+        return icon.name.includes(search.value);
+      });
+    });
     var selectIcon = function selectIcon(icon) {
       emits('select', icon.name, icon.contents, currentIconset.value);
     };
@@ -202,13 +202,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       props: props,
       emits: emits,
       currentIconset: currentIconset,
-      iconsetOptions: iconsetOptions,
       changeIconset: changeIconset,
+      iconsetOptions: iconsetOptions,
       fetching: fetching,
       icons: icons,
+      fetchIcons: fetchIcons,
       search: search,
       filteredIcons: filteredIcons,
-      fetchIcons: fetchIcons,
       selectIcon: selectIcon,
       ref: vue__WEBPACK_IMPORTED_MODULE_0__.ref,
       computed: vue__WEBPACK_IMPORTED_MODULE_0__.computed,

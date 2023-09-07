@@ -18,24 +18,20 @@ class SvgIconset implements JsonSerializable
     ) {
     }
 
-    public function match(string $icon): ?SvgIcon
+    public function match(string $value): bool
     {
         if (! $this->prefix) {
-            return null;
+            return false;
         }
 
-        if (! Str::startsWith($icon, $this->prefix)) {
-            return null;
-        }
-
-        return $this->icon(Str::after($icon, $this->prefix));
+        return Str::startsWith($value, $this->prefix);
     }
 
-    public function icon(string $name): SvgIcon
+    public function icon(string $value): SvgIcon
     {
         return new SvgIcon(
-            $this->prefix . $name,
-            $this->path . DIRECTORY_SEPARATOR . $name . static::EXTENSION
+            $value,
+            $this->path . DIRECTORY_SEPARATOR . Str::after($value, $this->prefix) . static::EXTENSION
         );
     }
 
