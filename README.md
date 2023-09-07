@@ -20,8 +20,8 @@
 - [x] support default icon value
 - [x] support responsive layout
 - [x] configure picker grid (modal size, columns, icon size)
+- [x] fix css error
 - [ ] support dependent field
-- [ ] fix css error
 - [ ] ukrainian localization
 - [ ] prepare package for prod
 
