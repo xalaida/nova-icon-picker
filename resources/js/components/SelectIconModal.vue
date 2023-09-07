@@ -81,24 +81,20 @@ const emits = defineEmits(['close', 'select'])
 
 const currentIconset = ref(props.currentIconset ?? props.iconsets[0].name)
 
-const iconsetOptions = computed(() => props.iconsets.map((iconset) => ({
-    value: iconset.name,
-    label: iconset.name,
-})))
-
 const changeIconset = async (iconset) => {
     currentIconset.value = iconset
 
     await fetchIcons()
 }
 
+const iconsetOptions = computed(() => props.iconsets.map((iconset) => ({
+    value: iconset.name,
+    label: iconset.name,
+})))
+
 const fetching = ref(false)
 
 const icons = ref([])
-
-const search = ref('')
-
-const filteredIcons = computed(() => icons.value.filter((icon) => icon.name.includes(search.value)))
 
 const fetchIcons = async () => {
     try {
@@ -111,6 +107,10 @@ const fetchIcons = async () => {
         fetching.value = false
     }
 }
+
+const search = ref('')
+
+const filteredIcons = computed(() => icons.value.filter((icon) => icon.name.includes(search.value)))
 
 const selectIcon = (icon) => {
     emits('select', icon.name, icon.contents, currentIconset.value)
