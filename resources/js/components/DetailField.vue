@@ -15,7 +15,6 @@
 </template>
 
 <script>
-// @todo support nullable value
 export default {
     props: [
         'index',

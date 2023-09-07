@@ -21,7 +21,7 @@
 - [x] support responsive layout
 - [x] configure picker grid (modal size, columns, icon size)
 - [x] fix css error
-- [ ] remove unused dependencies
+- [x] remove unused dependencies
 - [ ] support dependent field
 - [ ] ukrainian localization
 - [ ] prepare package for prod
