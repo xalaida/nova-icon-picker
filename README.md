@@ -23,5 +23,5 @@
 - [x] fix css error
 - [x] remove unused dependencies
 - [x] ukrainian localization
-- [ ] support dependent field
+- [x] support dependent field
 - [ ] prepare package for prod

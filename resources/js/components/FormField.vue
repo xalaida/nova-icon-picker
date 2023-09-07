@@ -9,8 +9,8 @@
             <div>
                 <div v-if="preview" class="relative inline-block p-4 bg-gray-50 dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-700 rounded-lg">
                     <div
-                        :class="[{ rounded: field.rounded }, field.aspect]"
-                        :style="{ width: `${field.detailWidth}px` }"
+                        :class="[{ rounded: currentField.rounded }, currentField.aspect]"
+                        :style="{ width: `${currentField.detailWidth}px` }"
                         v-html="preview"
                     />
 
@@ -27,7 +27,7 @@
                     {{ value }}
                 </p>
 
-                <template v-if="!field.readonly">
+                <template v-if="!currentField.readonly">
                     <div>
                         <DefaultButton
                             type="button"
@@ -40,12 +40,12 @@
                     <SelectIconModal
                         v-if="isSelecting"
                         :resource-name="resourceName"
-                        :attribute="field.attribute"
-                        :iconsets="field.iconsets"
+                        :attribute="currentField.attribute"
+                        :iconsets="currentField.iconsets"
                         :current-iconset="iconset"
                         :current-icon="value"
-                        @close="isSelecting = false"
                         @select="onSelect"
+                        @close="isSelecting = false"
                     />
                 </template>
             </div>
@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import {FormField, HandlesValidationErrors} from 'laravel-nova'
+import { DependentFormField, HandlesValidationErrors } from 'laravel-nova'
 import SelectIconModal from "./SelectIconModal.vue";
 
 export default {
@@ -63,7 +63,7 @@ export default {
     },
 
     mixins: [
-        FormField,
+        DependentFormField,
         HandlesValidationErrors
     ],
 
@@ -83,14 +83,13 @@ export default {
 
     computed: {
         shouldShowResetButton() {
-            return this.value && this.currentField.resettable && !this.currentField.readonly
-                // && !this.currentlyIsReadonly
+            return this.value && this.currentField.resettable && !this.currentlyIsReadonly
         }
     },
 
     methods: {
         setInitialValue() {
-            this.value = this.field.value
+            this.value = this.currentField.value
         },
 
         fill(formData) {

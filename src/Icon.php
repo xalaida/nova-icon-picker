@@ -5,18 +5,20 @@ namespace Nevadskiy\Nova\IconPicker;
 use Illuminate\Support\Str;
 use Laravel\Nova\Fields\Field;
 use Laravel\Nova\Fields\PresentsImages;
+use Laravel\Nova\Fields\SupportsDependentFields;
 use RuntimeException;
 
 class Icon extends Field
 {
     use PresentsImages;
+    use SupportsDependentFields;
 
     /**
      * The configuration callbacks.
      *
      * @var array
      */
-    protected static $configCallbacks = [];
+    public static $configCallbacks = [];
 
     /**
      * @inheritdoc
@@ -76,26 +78,6 @@ class Icon extends Field
     }
 
     /**
-     * Display the "reset" button.
-     */
-    public function resettable(bool $resettable = true): static
-    {
-        $this->resettable = $resettable;
-
-        return $this;
-    }
-
-    /**
-     * Specify the name of the fallback iconset.
-     */
-    public function fallbackIconset(string $iconset): static
-    {
-        $this->fallbackIconset = $iconset;
-
-        return $this;
-    }
-
-    /**
      * Register the SVG iconset using the given options.
      */
     public function iconset(string $path, string $display, string $name = null, string $prefix = ''): static
@@ -112,6 +94,26 @@ class Icon extends Field
         if (empty($prefix)) {
             $this->fallbackIconset($name);
         }
+
+        return $this;
+    }
+
+    /**
+     * Specify the name of the fallback iconset.
+     */
+    public function fallbackIconset(string $iconset): static
+    {
+        $this->fallbackIconset = $iconset;
+
+        return $this;
+    }
+
+    /**
+     * Display the "reset" button.
+     */
+    public function resettable(bool $resettable = true): static
+    {
+        $this->resettable = $resettable;
 
         return $this;
     }
@@ -150,8 +152,12 @@ class Icon extends Field
     /**
      * Resolve the current iconset and icon.
      */
-    protected function resolveIconsetWithIcon(string $value): array
+    protected function resolveIconsetWithIcon(?string $value): array
     {
+        if (is_null($value)) {
+            return [null, null];
+        }
+
         foreach ($this->iconsets as $iconset) {
             $icon = $iconset->match($value);
 
