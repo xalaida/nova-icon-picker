@@ -34,7 +34,7 @@
 
                 <div class="py-6 px-8 overflow-x-hidden overflow-y-auto" style="max-height: 460px">
                     <LoadingView :loading="fetching">
-                        <ul v-if="icons.length > 0" class="grid grid-cols-4 md:grid-cols-12 gap-2">
+                        <ul v-if="filteredIcons.length > 0" class="grid grid-cols-4 md:grid-cols-12 gap-2">
                             <li v-for="icon in filteredIcons" :key="icon.name" class="w-full">
                                 <button
                                     type="button"
