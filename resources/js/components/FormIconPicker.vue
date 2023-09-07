@@ -7,7 +7,7 @@
     >
         <template #field>
             <div>
-                <div v-if="preview" class="relative inline-block p-4 bg-gray-50 dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-700 rounded-lg">
+                <div v-if="preview" class="mb-1 relative inline-block p-4 bg-gray-50 dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-700 rounded-lg">
                     <span
                         class="inline-block"
                         :style="{ width: `${currentField.detailSize}px`, height: `${currentField.detailSize}px` }"
@@ -23,7 +23,7 @@
                     />
                 </div>
 
-                <p v-if="value" class="font-semibold text-xs mt-1 mb-4">
+                <p v-if="value" class="font-semibold text-xs mb-4">
                     {{ value }}
                 </p>
 
