@@ -38,7 +38,7 @@ class IconPicker extends Field
     public $iconsets = [];
 
     /**
-     * The name of the fallback iconset.
+     * The URI of the fallback iconset.
      *
      * @var string
      */
