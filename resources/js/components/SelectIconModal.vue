@@ -79,7 +79,7 @@ const props = defineProps(['resourceName', 'attribute', 'iconsets', 'currentIcon
 
 const emits = defineEmits(['close', 'select'])
 
-const currentIconset = ref(props.currentIconset ?? props.iconsets[0].name)
+const currentIconset = ref(props.currentIconset ?? props.iconsets[0].uri)
 
 const changeIconset = async (iconset) => {
     currentIconset.value = iconset
@@ -88,7 +88,7 @@ const changeIconset = async (iconset) => {
 }
 
 const iconsetOptions = computed(() => props.iconsets.map((iconset) => ({
-    value: iconset.name,
+    value: iconset.uri,
     label: iconset.name,
 })))
 

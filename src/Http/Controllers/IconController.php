@@ -26,7 +26,7 @@ class IconController extends Controller
             });
 
         return response()->json(
-            $field->getIconset($request->iconset)->icons()
+            $field->getIconsetByUri($request->iconset)->icons()
         );
     }
 }

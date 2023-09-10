@@ -2,6 +2,7 @@
 
 namespace Nevadskiy\Nova\IconPicker;
 
+use Illuminate\Support\Str;
 use Laravel\Nova\Fields\Field;
 use Laravel\Nova\Fields\SupportsDependentFields;
 use RuntimeException;
@@ -110,17 +111,19 @@ class IconPicker extends Field
      */
     public function iconset(string $name, string $path, string $prefix = ''): static
     {
-        $this->iconsets[$name] = new SvgIconset($name, $path, $prefix);
+        $uri = Str::slug($name);
+
+        $this->iconsets[$uri] = new SvgIconset($name, $uri, $path, $prefix);
 
         if (! $prefix && ! $this->fallbackIconset) {
-            $this->fallbackIconset($name);
+            $this->fallbackIconset($uri);
         }
 
         return $this;
     }
 
     /**
-     * Specify the name of the fallback iconset.
+     * Specify the URI of the fallback iconset.
      */
     public function fallbackIconset(string $iconset): static
     {
@@ -140,15 +143,15 @@ class IconPicker extends Field
     }
 
     /**
-     * Get the iconset by the given name.
+     * Get the iconset by the given URI.
      */
-    public function getIconset(string $name): SvgIconset
+    public function getIconsetByUri(string $uri): SvgIconset
     {
-        if (! isset($this->iconsets[$name])) {
-            throw new RuntimeException(__('Iconset [:iconset] is missing.', ['iconset' => $name]));
+        if (! isset($this->iconsets[$uri])) {
+            throw new RuntimeException(__('Iconset [:iconset] is missing.', ['iconset' => $uri]));
         }
 
-        return $this->iconsets[$name];
+        return $this->iconsets[$uri];
     }
 
     /**
@@ -169,7 +172,7 @@ class IconPicker extends Field
             'detailSize' => $this->detailSize,
             'resettable' => $this->resettable,
             'iconsets' => array_values($this->iconsets),
-            'iconset' => $iconset?->name,
+            'iconset' => $iconset?->uri,
             'contents' => $icon?->contents(),
         ]);
     }
@@ -190,7 +193,7 @@ class IconPicker extends Field
         }
 
         if (! is_null($this->fallbackIconset)) {
-            return $this->getIconset($this->fallbackIconset);
+            return $this->getIconsetByUri($this->fallbackIconset);
         }
 
         return null;

@@ -13,6 +13,7 @@ class SvgIconset implements JsonSerializable
 
     public function __construct(
         public string $name,
+        public string $uri,
         public string $path,
         public string $prefix = '',
     ) {
@@ -50,6 +51,7 @@ class SvgIconset implements JsonSerializable
     {
         return [
             'name' => $this->name,
+            'uri' => $this->uri,
         ];
     }
 }
